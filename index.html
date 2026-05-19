@@ -1,1604 +1,1935 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trim Reaper Barbershop | Premium Grooming Experience</title>
-  <meta name="description" content="A cinematic premium barbershop website built for bookings, trust, and luxury brand presentation." />
-
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trim Reaper | Master Barbershop · Chicago</title>
+  <meta name="description" content="Trim Reaper is Chicago's premier master barbershop. Precision fades, hot towel shaves, and a studio built around the details that matter."/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,700;0,900;1,300;1,700;1,900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    /* ══════════════════════════════════════════
+       VARIABLES & RESET
+    ══════════════════════════════════════════ */
     :root {
-      --bg: #0e0b08;
-      --bg-soft: #15100b;
-      --card: rgba(21, 16, 11, .76);
-      --text: #f7efe4;
-      --muted: #cfc4b6;
-      --line: rgba(245, 215, 161, .14);
-      --gold: #d8a84f;
-      --gold-soft: #f5d7a1;
-      --cream: #fff7ea;
-      --espresso: #090705;
-      --shadow: 0 34px 100px rgba(0,0,0,.58);
-      --max: 1180px;
+      --void:    #080604;
+      --ink:     #0f0c09;
+      --carbon:  #1a1510;
+      --iron:    #2a2218;
+      --smoke:   #3d3228;
+      --ash:     #6b5d4e;
+      --bone:    #c8b89a;
+      --ivory:   #f0e6d3;
+      --cream:   #faf3e8;
+      --amber:   #c8860a;
+      --gold:    #e8a820;
+      --gilt:    #f5c842;
+      --blood:   #8b1a1a;
+      --rust:    #b83a1a;
+      --line:    rgba(200,180,154,.12);
+      --line-g:  rgba(232,168,32,.18);
+      --glow:    rgba(232,168,32,.08);
+      --shadow:  0 40px 120px rgba(0,0,0,.72);
+      --max:     1240px;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+
     body {
-      font-family: "Inter", sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      font-family: "Libre Baskerville", Georgia, serif;
+      background: var(--void);
+      color: var(--ivory);
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
+      cursor: none;
     }
 
-    img { max-width: 100%; display: block; }
-    a { color: inherit; text-decoration: none; }
-    button, input, textarea, select { font: inherit; }
+    img { display:block; max-width:100%; }
+    a { color:inherit; text-decoration:none; }
+    button, input, textarea, select { font:inherit; }
 
-    .noise {
-      position: fixed;
-      inset: 0;
-      z-index: -4;
-      opacity: .08;
-      pointer-events: none;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    /* ── GRAIN ── */
+    body::before {
+      content:"";
+      position:fixed; inset:0; z-index:-1;
+      opacity:.055;
+      pointer-events:none;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+      background-size:256px;
     }
 
+    /* ── AMBIENT RADIALS ── */
+    body::after {
+      content:"";
+      position:fixed; inset:0; z-index:-2; pointer-events:none;
+      background:
+        radial-gradient(ellipse 60% 40% at 5% 5%,  rgba(200,134,10,.10), transparent 55%),
+        radial-gradient(ellipse 40% 60% at 95% 80%, rgba(139,26,26,.14), transparent 55%),
+        radial-gradient(ellipse 70% 30% at 50% 50%, rgba(232,168,32,.04), transparent 65%);
+    }
+
+    /* ── CUSTOM CURSOR ── */
+    .cursor-dot {
+      position:fixed; width:8px; height:8px; border-radius:50%;
+      background:var(--gold); pointer-events:none; z-index:9999;
+      transform:translate(-50%,-50%);
+      transition:width .2s, height .2s, background .2s;
+      mix-blend-mode:screen;
+    }
+
+    .cursor-ring {
+      position:fixed; width:36px; height:36px;
+      border:1px solid rgba(232,168,32,.55); border-radius:50%;
+      pointer-events:none; z-index:9998;
+      transform:translate(-50%,-50%);
+      transition:width .25s, height .25s, border-color .25s;
+    }
+
+    .cursor-dot.hovered  { width:16px; height:16px; background:var(--gilt); }
+    .cursor-ring.hovered { width:56px; height:56px; border-color:var(--gold); }
+
+    /* ── PROGRESS ── */
+    .progress {
+      position:fixed; top:0; left:0; height:2px; width:0%;
+      z-index:500;
+      background:linear-gradient(90deg, var(--amber), var(--gold), var(--gilt));
+      box-shadow:0 0 22px rgba(232,168,32,.6);
+    }
+
+    /* ── HELPERS ── */
     .container {
-      width: min(var(--max), calc(100% - 36px));
-      margin: 0 auto;
+      width:min(var(--max), calc(100% - 44px));
+      margin:0 auto;
     }
 
-    .display {
-      font-family: "Bebas Neue", sans-serif;
-      text-transform: uppercase;
-      letter-spacing: .04em;
-      line-height: .88;
-    }
+    .section { padding:120px 0; position:relative; }
 
     .eyebrow {
-      color: var(--gold-soft);
-      font-size: 12px;
-      font-weight: 900;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      margin-bottom: 16px;
+      display:inline-flex; align-items:center; gap:12px;
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:11px; font-weight:700;
+      letter-spacing:.3em; text-transform:uppercase;
+      color:var(--amber); margin-bottom:18px;
     }
 
-    .section { padding: 110px 0; position: relative; }
-
-    .btn {
-      min-height: 52px;
-      padding: 0 24px;
-      border-radius: 2px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      border: 1px solid transparent;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: .08em;
-      font-size: 12px;
-      cursor: pointer;
-      transition: .25s ease;
-    }
-
-    .btn:hover { transform: translateY(-3px); }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--gold-soft), var(--gold));
-      color: #111;
-      box-shadow: 0 18px 42px rgba(216,168,79,.22);
-    }
-
-    .btn-secondary {
-      border-color: var(--line);
-      background: rgba(0,0,0,.28);
-      color: var(--text);
-      backdrop-filter: blur(12px);
-    }
-
-    .nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 50;
-      background: rgba(7,7,7,.76);
-      border-bottom: 1px solid var(--line);
-      backdrop-filter: blur(18px);
-    }
-
-    .nav-inner {
-      width: min(var(--max), calc(100% - 36px));
-      margin: 0 auto;
-      min-height: 76px;
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items: center;
-      gap: 24px;
-    }
-
-    .logo {
-      font-family: "Bebas Neue", sans-serif;
-      font-size: 32px;
-      letter-spacing: .08em;
-      white-space: nowrap;
-    }
-
-    .logo span { color: var(--gold-soft); }
-
-    .nav-links {
-      display: flex;
-      justify-content: center;
-      gap: 28px;
-      color: rgba(248,244,236,.72);
-      font-size: 12px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: .12em;
-    }
-
-    .nav-links a:hover { color: var(--gold-soft); }
-
-    .nav-actions {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .menu-btn {
-      display: none;
-      width: 46px;
-      height: 46px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.05);
-      color: var(--text);
-      cursor: pointer;
-    }
-
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: end;
-      padding: 132px 0 72px;
-      position: relative;
-      overflow: hidden;
-      background:
-        linear-gradient(90deg, rgba(0,0,0,.88), rgba(0,0,0,.42), rgba(0,0,0,.82)),
-        url("https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=1800&q=80") center/cover;
-    }
-
-    .hero::before {
-      content: "Trim Reaper";
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -52%);
-      font-family: "Bebas Neue", sans-serif;
-      font-size: clamp(120px, 19vw, 290px);
-      letter-spacing: .06em;
-      color: rgba(255,255,255,.045);
-      white-space: nowrap;
-      pointer-events: none;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      display: grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap: 42px;
-      align-items: end;
-    }
-
-    .hero h1 {
-      font-size: clamp(86px, 13vw, 188px);
-      max-width: 940px;
-    }
-
-    .hero h1 span { color: var(--gold-soft); }
-
-    .hero-copy p {
-      max-width: 620px;
-      margin-top: 22px;
-      color: var(--muted);
-      font-size: 18px;
-      line-height: 1.75;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 34px;
-    }
-
-    .hero-panel {
-      border: 1px solid var(--line);
-      background: rgba(0,0,0,.48);
-      backdrop-filter: blur(16px);
-      padding: 26px;
-      box-shadow: var(--shadow);
-    }
-
-    .hero-panel h3 {
-      font-size: 34px;
-      margin-bottom: 16px;
-    }
-
-    .hero-stat {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      padding: 15px 0;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .hero-stat:last-child { border-bottom: 0; }
-    .hero-stat strong { color: var(--gold-soft); font-size: 24px; }
-    .hero-stat span {
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: .1em;
-    }
-
-    .marquee {
-      overflow: hidden;
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      background: #0d0d0d;
-      padding: 22px 0;
-    }
-
-    .marquee-track {
-      width: max-content;
-      display: flex;
-      animation: marquee 26s linear infinite;
-    }
-
-    .marquee p {
-      font-family: "Bebas Neue", sans-serif;
-      font-size: 36px;
-      letter-spacing: .08em;
-      color: rgba(248,244,236,.86);
-      white-space: nowrap;
-    }
-
-    .marquee span {
-      color: var(--gold-soft);
-      margin: 0 28px;
-    }
-
-    @keyframes marquee {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
-    }
-
-    .section-title {
-      display: grid;
-      grid-template-columns: 1fr .72fr;
-      gap: 42px;
-      align-items: end;
-      margin-bottom: 44px;
-    }
-
-    .section-title h2,
-    .editorial-copy h2,
-    .booking-copy h2 {
-      font-size: clamp(70px, 9vw, 132px);
-    }
-
-    .section-title p,
-    .editorial-copy p,
-    .booking-copy p {
-      color: var(--muted);
-      line-height: 1.8;
-      font-size: 16px;
-      margin-top: 20px;
-      max-width: 600px;
-    }
-
-    .split-editorial {
-      display: grid;
-      grid-template-columns: .9fr 1.1fr;
-      gap: 52px;
-      align-items: center;
-    }
-
-    .image-stack {
-      position: relative;
-      min-height: 690px;
-    }
-
-    .image-stack img {
-      width: 74%;
-      height: 520px;
-      object-fit: cover;
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-    }
-
-    .image-stack img:first-child {
-      position: absolute;
-      left: 0;
-      top: 0;
-    }
-
-    .image-stack img:last-child {
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      width: 58%;
-      height: 390px;
-      filter: saturate(.9) contrast(1.08);
-    }
-
-    .bullet-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-top: 34px;
-    }
-
-    .bullet {
-      border: 1px solid var(--line);
-      background: var(--card);
-      padding: 18px;
-    }
-
-    .bullet strong {
-      display: block;
-      color: var(--gold-soft);
-      margin-bottom: 8px;
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: .14em;
-    }
-
-    .bullet span {
-      color: var(--muted);
-      line-height: 1.6;
-      font-size: 14px;
-    }
-
-    .services-list {
-      border-top: 1px solid var(--line);
-    }
-
-    .service-row {
-      display: grid;
-      grid-template-columns: .25fr 1fr .32fr .25fr;
-      gap: 24px;
-      align-items: center;
-      padding: 28px 0;
-      border-bottom: 1px solid var(--line);
-      transition: .25s ease;
-    }
-
-    .service-row:hover {
-      background: rgba(216,168,79,.045);
-      padding-left: 18px;
-      padding-right: 18px;
-    }
-
-    .service-row small {
-      color: var(--gold-soft);
-      font-weight: 900;
-      letter-spacing: .16em;
-    }
-
-    .service-row h3 {
-      font-family: "Bebas Neue", sans-serif;
-      font-size: clamp(34px, 4vw, 60px);
-      letter-spacing: .04em;
-      text-transform: uppercase;
-    }
-
-    .service-row p {
-      color: var(--muted);
-      line-height: 1.65;
-      font-size: 14px;
-    }
-
-    .service-row strong {
-      color: var(--gold-soft);
-      font-size: 22px;
-      justify-self: end;
-    }
-
-    .campaign {
-      min-height: 620px;
-      display: flex;
-      align-items: center;
-      background:
-        linear-gradient(90deg, rgba(0,0,0,.9), rgba(0,0,0,.48), rgba(0,0,0,.84)),
-        url("https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=1800&q=80") center/cover fixed;
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .campaign h2 {
-      font-size: clamp(86px, 13vw, 180px);
-      max-width: 980px;
-    }
-
-    .campaign p {
-      max-width: 560px;
-      color: var(--muted);
-      line-height: 1.8;
-      margin-top: 22px;
-      font-size: 17px;
-    }
-
-    .barbers-showcase {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
-    }
-
-    .barber-card {
-      position: relative;
-      min-height: 560px;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      background: #111;
-    }
-
-    .barber-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: grayscale(.2) contrast(1.08);
-      transition: .6s ease;
-    }
-
-    .barber-card:hover img { transform: scale(1.06); }
-
-    .barber-info {
-      position: absolute;
-      inset: auto 0 0 0;
-      padding: 26px;
-      background: linear-gradient(transparent, rgba(0,0,0,.88));
-    }
-
-    .barber-info h3 { font-size: 54px; }
-
-    .barber-info p {
-      color: var(--muted);
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: .08em;
-      font-size: 12px;
-      margin-top: 6px;
-    }
-
-    .barber-info span {
-      display: inline-flex;
-      margin-top: 18px;
-      color: var(--gold-soft);
-      font-weight: 900;
-      font-size: 13px;
-    }
-
-    .gallery-editorial {
-      display: grid;
-      grid-template-columns: 1.25fr .75fr;
-      gap: 22px;
-    }
-
-    .gallery-column {
-      display: grid;
-      gap: 22px;
-    }
-
-    .gallery-big { height: 720px; }
-    .gallery-small { height: 349px; }
-
-    .gallery-editorial figure {
-      position: relative;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      background: #111;
-    }
-
-    .gallery-editorial img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: .7s ease;
-      filter: saturate(.9) contrast(1.05);
-    }
-
-    .gallery-editorial figure:hover img { transform: scale(1.06); }
-
-    .gallery-editorial figcaption {
-      position: absolute;
-      left: 18px;
-      bottom: 18px;
-      background: rgba(0,0,0,.62);
-      border: 1px solid var(--line);
-      padding: 10px 12px;
-      color: var(--gold-soft);
-      font-size: 11px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: .12em;
-      backdrop-filter: blur(14px);
-    }
-
-    .reviews {
-      background: #0d0d0d;
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .reviews-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-    }
-
-    .review-card {
-      min-height: 330px;
-      padding: 28px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.045);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .stars {
-      color: var(--gold-soft);
-      letter-spacing: .16em;
-      font-size: 13px;
-    }
-
-    .review-card p {
-      color: var(--text);
-      line-height: 1.75;
-      margin: 24px 0;
-    }
-
-    .reviewer {
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: .08em;
-    }
-
-    .membership {
-      display: grid;
-      grid-template-columns: .9fr 1.1fr;
-      gap: 22px;
-      align-items: stretch;
-    }
-
-    .membership-card {
-      border: 1px solid rgba(216,168,79,.28);
-      background: linear-gradient(135deg, rgba(216,168,79,.15), rgba(255,255,255,.045));
-      padding: 42px;
-      min-height: 500px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      box-shadow: var(--shadow);
-    }
-
-    .membership-card h2 { font-size: clamp(70px, 8vw, 128px); }
-
-    .membership-card p {
-      color: var(--muted);
-      line-height: 1.8;
-      margin-top: 18px;
-      max-width: 520px;
-    }
-
-    .membership-list {
-      display: grid;
-      gap: 14px;
-    }
-
-    .membership-list div {
-      border: 1px solid var(--line);
-      background: var(--card);
-      padding: 24px;
-      display: flex;
-      justify-content: space-between;
-      gap: 24px;
-      align-items: center;
-    }
-
-    .membership-list h3 {
-      font-family: "Bebas Neue", sans-serif;
-      font-size: 42px;
-      letter-spacing: .04em;
-    }
-
-    .membership-list p {
-      color: var(--muted);
-      margin-top: 6px;
-      line-height: 1.55;
-      font-size: 14px;
-    }
-
-    .membership-list strong {
-      color: var(--gold-soft);
-      font-size: 24px;
-      white-space: nowrap;
-    }
-
-    .booking-layout {
-      display: grid;
-      grid-template-columns: .85fr 1.15fr;
-      gap: 24px;
-      align-items: stretch;
-    }
-
-    .booking-copy {
-      border: 1px solid var(--line);
-      background:
-        linear-gradient(rgba(0,0,0,.56), rgba(0,0,0,.86)),
-        url("https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=1400&q=80") center/cover;
-      min-height: 620px;
-      padding: 42px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .hours-list {
-      display: grid;
-      gap: 12px;
-      margin-top: 36px;
-    }
-
-    .hours-list div {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      border-bottom: 1px solid var(--line);
-      padding-bottom: 12px;
-      color: var(--muted);
-      font-size: 14px;
-      font-weight: 800;
-    }
-
-    .hours-list strong { color: var(--text); }
-
-    .booking-form {
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.055);
-      padding: 38px;
-      box-shadow: var(--shadow);
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-
-    .form-field { display: grid; gap: 8px; }
-    .form-field.full { grid-column: 1 / -1; }
-
-    label {
-      color: var(--text);
-      font-size: 11px;
-      font-weight: 900;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-    }
-
-    input, select, textarea {
-      width: 100%;
-      border: 1px solid var(--line);
-      background: rgba(0,0,0,.32);
-      color: var(--text);
-      padding: 15px;
-      outline: 0;
-      border-radius: 0;
-    }
-
-    input:focus, select:focus, textarea:focus {
-      border-color: rgba(216,168,79,.65);
-    }
-
-    textarea { min-height: 128px; resize: vertical; }
-
-    .form-note {
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.6;
-      margin-top: 16px;
-    }
-
-    .faq-grid {
-      display: grid;
-      grid-template-columns: .75fr 1.25fr;
-      gap: 34px;
-      align-items: start;
-    }
-
-    .faq-list {
-      display: grid;
-      gap: 12px;
-    }
-
-    .faq-item {
-      border: 1px solid var(--line);
-      background: var(--card);
-      overflow: hidden;
-    }
-
-    .faq-question {
-      width: 100%;
-      color: var(--text);
-      background: transparent;
-      border: 0;
-      padding: 20px;
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      text-align: left;
-      cursor: pointer;
-      font-weight: 900;
-    }
-
-    .faq-question span:last-child {
-      color: var(--gold-soft);
-      font-size: 20px;
-    }
-
-    .faq-answer {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height .3s ease;
-    }
-
-    .faq-answer p {
-      padding: 0 20px 20px;
-      color: var(--muted);
-      line-height: 1.7;
-      font-size: 14px;
-    }
-
-    .faq-item.active .faq-answer { max-height: 190px; }
-
-    .contact-strip {
-      padding: 42px 0;
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      background: #0d0d0d;
-    }
-
-    .contact-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
-    }
-
-    .contact-item {
-      border: 1px solid var(--line);
-      background: var(--card);
-      padding: 22px;
-    }
-
-    .contact-item small {
-      color: var(--gold-soft);
-      font-size: 11px;
-      font-weight: 900;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-    }
-
-    .contact-item p {
-      margin-top: 10px;
-      color: var(--text);
-      line-height: 1.55;
-      font-weight: 800;
-    }
-
-    footer { padding: 56px 0 96px; }
-
-    .footer-grid {
-      display: flex;
-      justify-content: space-between;
-      gap: 32px;
-      align-items: start;
-      border-bottom: 1px solid var(--line);
-      padding-bottom: 28px;
-    }
-
-    .footer-brand p {
-      color: var(--muted);
-      line-height: 1.7;
-      max-width: 430px;
-      margin-top: 12px;
-    }
-
-    .footer-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 18px;
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: .08em;
-    }
-
-    .copyright {
-      margin-top: 22px;
-      color: rgba(248,244,236,.42);
-      font-size: 13px;
-    }
-
-    .mobile-cta {
-      display: none;
-      position: fixed;
-      left: 14px;
-      right: 14px;
-      bottom: 14px;
-      z-index: 60;
-      min-height: 56px;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, var(--gold-soft), var(--gold));
-      color: #111;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: .08em;
+    .eyebrow::before {
+      content:"";
+      width:32px; height:1px;
+      background:linear-gradient(90deg, var(--amber), transparent);
     }
 
+    /* ── REVEAL ── */
     .reveal {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity .7s ease, transform .7s ease;
+      opacity:0; transform:translateY(36px);
+      transition:opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1);
+    }
+    .reveal.up   { transform:translateY(36px); }
+    .reveal.left { transform:translateX(-36px); }
+    .reveal.right{ transform:translateX(36px); }
+    .reveal.visible { opacity:1; transform:translate(0,0); }
+    .d1 { transition-delay:.1s; }
+    .d2 { transition-delay:.2s; }
+    .d3 { transition-delay:.3s; }
+    .d4 { transition-delay:.4s; }
+
+    /* ── DIVIDER ── */
+    .razor-line {
+      width:100%; height:1px;
+      background:linear-gradient(90deg, transparent, var(--line-g), var(--amber), var(--line-g), transparent);
+      position:relative; overflow:hidden;
     }
 
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
+    .razor-line::after {
+      content:"";
+      position:absolute; top:0; left:-100%; width:40%;  height:100%;
+      background:linear-gradient(90deg, transparent, var(--gilt), transparent);
+      animation:razorSwipe 4s ease-in-out infinite;
     }
 
-    @media (max-width: 1020px) {
-      .nav-inner { grid-template-columns: 1fr auto; }
-      .nav-links, .nav-actions .btn-secondary { display: none; }
-      .menu-btn { display: block; }
-
-      .nav.open .nav-links {
-        display: grid;
-        position: absolute;
-        top: 76px;
-        left: 18px;
-        right: 18px;
-        background: rgba(7,7,7,.96);
-        border: 1px solid var(--line);
-        padding: 14px;
-      }
-
-      .nav.open .nav-links a { padding: 14px; }
-
-      .hero-content,
-      .split-editorial,
-      .section-title,
-      .membership,
-      .booking-layout,
-      .faq-grid,
-      .gallery-editorial {
-        grid-template-columns: 1fr;
-      }
-
-      .hero { align-items: center; }
-
-      .barbers-showcase,
-      .reviews-grid,
-      .contact-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .service-row { grid-template-columns: .2fr 1fr .25fr; }
-      .service-row p { grid-column: 2 / -1; }
+    @keyframes razorSwipe {
+      0%   { left:-40%; }
+      100% { left:140%; }
     }
 
-    @media (max-width: 680px) {
-      .container, .nav-inner {
-        width: min(100% - 28px, var(--max));
-      }
-
-      .section { padding: 78px 0; }
-      .hero { padding-top: 120px; min-height: 92vh; }
-      .hero h1 { font-size: clamp(72px, 21vw, 112px); }
-      .hero-panel, .hero::before { display: none; }
-      .hero-actions .btn { width: 100%; }
-
-      .bullet-grid,
-      .barbers-showcase,
-      .reviews-grid,
-      .contact-grid,
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .image-stack { min-height: 520px; }
-      .image-stack img:first-child { width: 82%; height: 390px; }
-      .image-stack img:last-child { width: 68%; height: 260px; }
-
-      .service-row { grid-template-columns: 1fr; gap: 12px; }
-      .service-row strong { justify-self: start; }
-
-      .gallery-big, .gallery-small { height: 360px; }
-
-      .membership-list div { display: block; }
-      .membership-list strong {
-        display: block;
-        margin-top: 14px;
-      }
-
-      .footer-grid { display: grid; }
-      .mobile-cta { display: flex; }
-      footer { padding-bottom: 112px; }
-    }
-  
-
-    /* ==========================================================
-       MAISON NOIR BARBERSHOP UPGRADE
-       Dark luxury palette + extra premium motion/polish.
-    ========================================================== */
-    body {
-      background:
-        radial-gradient(circle at 12% 8%, rgba(216,168,79,.13), transparent 28%),
-        radial-gradient(circle at 84% 18%, rgba(245,215,161,.08), transparent 30%),
-        linear-gradient(180deg, var(--bg) 0%, var(--bg-soft) 48%, var(--espresso) 100%);
-    }
-
-    .scroll-progress {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 0%;
-      height: 4px;
-      z-index: 999;
-      background: linear-gradient(90deg, #090705, var(--gold), var(--gold-soft));
-      box-shadow: 0 0 18px rgba(216,168,79,.45);
-    }
-
-    .cursor-glow {
-      position: fixed;
-      width: 300px;
-      height: 300px;
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: -3;
-      opacity: 0;
-      transform: translate(-50%, -50%);
-      background: radial-gradient(circle, rgba(216,168,79,.18), transparent 68%);
-      transition: opacity .25s ease;
-    }
-
+    /* ══════════════════════════════════════════
+       NAV
+    ══════════════════════════════════════════ */
     .nav {
-      background: rgba(14, 11, 8, .82);
-      border-bottom: 1px solid rgba(245,215,161,.16);
+      position:fixed; top:0; left:0; right:0; z-index:200;
+      background:rgba(8,6,4,.82);
+      border-bottom:1px solid var(--line);
+      backdrop-filter:blur(24px);
+      transition:background .3s, box-shadow .3s;
     }
 
     .nav.scrolled {
-      background: rgba(14, 11, 8, .96);
-      box-shadow: 0 18px 55px rgba(0,0,0,.38);
+      background:rgba(8,6,4,.96);
+      box-shadow:0 0 60px rgba(0,0,0,.5);
     }
 
+    .nav-inner {
+      width:min(var(--max), calc(100% - 44px));
+      margin:0 auto;
+      min-height:74px;
+      display:grid;
+      grid-template-columns:1fr auto 1fr;
+      align-items:center;
+      gap:24px;
+    }
+
+    .logo {
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:28px; font-weight:900;
+      letter-spacing:.1em; text-transform:uppercase;
+      white-space:nowrap;
+    }
+
+    .logo em { font-style:normal; color:var(--gold); }
+
+    .logo-badge {
+      display:inline-block;
+      width:6px; height:6px; border-radius:50%;
+      background:var(--amber);
+      margin:0 4px; vertical-align:middle;
+      animation:pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%,100% { box-shadow:0 0 0 0 rgba(200,134,10,.7); }
+      50%      { box-shadow:0 0 0 6px rgba(200,134,10,0); }
+    }
+
+    .nav-links {
+      display:flex; justify-content:center; gap:28px;
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:13px; font-weight:700;
+      letter-spacing:.18em; text-transform:uppercase;
+      color:rgba(240,230,211,.6);
+    }
+
+    .nav-links a { transition:color .22s; position:relative; }
+    .nav-links a::after {
+      content:""; position:absolute; bottom:-4px; left:0; right:0;
+      height:1px; background:var(--gold);
+      transform:scaleX(0); transform-origin:left;
+      transition:transform .3s cubic-bezier(.16,1,.3,1);
+    }
+    .nav-links a:hover { color:var(--ivory); }
+    .nav-links a:hover::after { transform:scaleX(1); }
+
+    .nav-actions {
+      display:flex; justify-content:flex-end; align-items:center; gap:10px;
+    }
+
+    .btn {
+      min-height:46px; padding:0 22px;
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      border:1px solid transparent;
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:13px; font-weight:700;
+      letter-spacing:.14em; text-transform:uppercase;
+      cursor:pointer;
+      transition:transform .22s cubic-bezier(.16,1,.3,1), box-shadow .22s ease, background .22s;
+    }
+
+    .btn:hover { transform:translateY(-3px); }
+
+    .btn-gold {
+      background:linear-gradient(135deg, var(--gilt) 0%, var(--gold) 50%, var(--amber) 100%);
+      color:var(--void);
+      box-shadow:0 14px 38px rgba(200,134,10,.28);
+    }
+
+    .btn-gold:hover { box-shadow:0 22px 56px rgba(200,134,10,.42); }
+
+    .btn-ghost {
+      border-color:var(--line-g);
+      background:rgba(255,255,255,.04);
+      color:var(--bone);
+      backdrop-filter:blur(12px);
+    }
+
+    .btn-ghost:hover { border-color:var(--gold); color:var(--ivory); }
+
+    .btn-outline {
+      border-color:var(--line-g);
+      background:transparent;
+      color:var(--gold);
+    }
+
+    .btn-outline:hover { background:rgba(232,168,32,.08); }
+
+    .menu-btn {
+      display:none;
+      width:46px; height:46px;
+      border:1px solid var(--line-g);
+      background:rgba(255,255,255,.04);
+      color:var(--ivory);
+      font-size:18px; cursor:pointer;
+    }
+
+    /* ══════════════════════════════════════════
+       HERO — full viewport cinematic
+    ══════════════════════════════════════════ */
     .hero {
+      min-height:100vh;
+      position:relative;
+      display:grid; align-items:end;
+      padding:100px 0 80px;
+      overflow:hidden;
+    }
+
+    .hero-bg {
+      position:absolute; inset:0; z-index:0;
+    }
+
+    .hero-bg img {
+      width:100%; height:100%; object-fit:cover;
+      animation:heroZoom 20s ease-in-out infinite alternate;
+      filter:saturate(.7) contrast(1.15) brightness(.55);
+    }
+
+    @keyframes heroZoom {
+      from { transform:scale(1.02) translateX(0); }
+      to   { transform:scale(1.1)  translateX(-1%); }
+    }
+
+    .hero-bg::after {
+      content:""; position:absolute; inset:0;
       background:
-        linear-gradient(90deg, rgba(0,0,0,.9), rgba(0,0,0,.48), rgba(0,0,0,.86)),
-        url("https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=1800&q=80") center/cover;
+        linear-gradient(to right, rgba(8,6,4,.92) 0%, rgba(8,6,4,.55) 55%, rgba(8,6,4,.78) 100%),
+        linear-gradient(to top,   rgba(8,6,4,.88) 0%, transparent 55%);
     }
 
-    .hero::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background: radial-gradient(circle at 50% 55%, transparent 0 35%, rgba(0,0,0,.42) 100%);
+    .hero-watermark {
+      position:absolute; z-index:1;
+      left:50%; top:50%;
+      transform:translate(-50%,-50%);
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:clamp(100px,22vw,340px);
+      font-weight:900; letter-spacing:.08em;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.025);
+      white-space:nowrap;
+      pointer-events:none;
+      user-select:none;
+      animation:watermarkDrift 30s ease-in-out infinite alternate;
     }
 
-    .btn-primary {
-      background: linear-gradient(135deg, var(--gold-soft), var(--gold) 52%, #9d6b24);
-      color: #120d08;
-      box-shadow: 0 22px 58px rgba(216,168,79,.24);
+    @keyframes watermarkDrift {
+      from { transform:translate(-50%,-50%) skewX(-1deg); }
+      to   { transform:translate(-51%,-49%) skewX(1deg); }
     }
 
-    .btn-primary:hover {
-      box-shadow: 0 28px 72px rgba(216,168,79,.36);
+    .hero-inner {
+      position:relative; z-index:2;
+      display:grid; grid-template-columns:1fr .42fr;
+      gap:48px; align-items:end;
     }
 
-    .btn-secondary,
-    .hero-panel,
-    .bullet,
-    .review-card,
-    .membership-list div,
-    .booking-form,
-    .faq-item,
-    .contact-item {
-      background: rgba(21, 16, 11, .72);
-      border-color: rgba(245,215,161,.14);
-      backdrop-filter: blur(16px);
+    .hero-left {}
+
+    .hero-kicker {
+      display:flex; align-items:center; gap:16px;
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:12px; font-weight:700;
+      letter-spacing:.28em; text-transform:uppercase;
+      color:var(--amber); margin-bottom:22px;
     }
 
-    .service-row:hover,
-    .membership-list div:hover,
-    .faq-item:hover,
-    .contact-item:hover {
-      background: rgba(216,168,79,.065);
-      border-color: rgba(216,168,79,.36);
+    .hero-kicker::before {
+      content:"";
+      display:block; width:48px; height:1px;
+      background:linear-gradient(90deg, var(--amber), transparent);
     }
 
+    .hero h1 {
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:clamp(80px,14vw,200px);
+      font-weight:900; line-height:.84;
+      letter-spacing:-.01em;
+      text-transform:uppercase;
+    }
+
+    .hero h1 .line-italic {
+      font-style:italic; font-weight:300;
+      color:var(--bone);
+      display:block;
+      font-size:.72em;
+    }
+
+    .hero h1 .line-gold { color:var(--gold); }
+
+    .hero-desc {
+      margin-top:28px;
+      max-width:540px;
+      color:var(--bone);
+      font-size:16px; line-height:1.85;
+      font-style:italic;
+    }
+
+    .hero-actions {
+      display:flex; flex-wrap:wrap; gap:12px;
+      margin-top:36px;
+    }
+
+    .hero-right {}
+
+    .hero-panel {
+      border:1px solid var(--line-g);
+      background:rgba(8,6,4,.72);
+      backdrop-filter:blur(20px);
+      padding:28px;
+      box-shadow:0 32px 80px rgba(0,0,0,.55);
+    }
+
+    .hero-panel-title {
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:11px; font-weight:700;
+      letter-spacing:.28em; text-transform:uppercase;
+      color:var(--ash); margin-bottom:20px;
+      padding-bottom:14px; border-bottom:1px solid var(--line);
+    }
+
+    .panel-stat {
+      display:flex; justify-content:space-between; align-items:baseline; gap:12px;
+      padding:14px 0;
+      border-bottom:1px solid var(--line);
+    }
+
+    .panel-stat:last-child { border-bottom:0; }
+
+    .panel-stat .label {
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:12px; font-weight:700;
+      letter-spacing:.14em; text-transform:uppercase;
+      color:var(--ash);
+    }
+
+    .panel-stat .val {
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:32px; font-weight:900; letter-spacing:-.02em;
+      color:var(--gold);
+    }
+
+    /* scroll indicator */
+    .scroll-hint {
+      position:absolute; bottom:28px; left:50%;
+      transform:translateX(-50%);
+      z-index:3;
+      display:flex; flex-direction:column; align-items:center; gap:8px;
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:10px; letter-spacing:.24em; text-transform:uppercase;
+      color:var(--ash);
+      animation:fadeInUp 1.5s ease .8s both;
+    }
+
+    .scroll-hint::after {
+      content:""; width:1px; height:40px;
+      background:linear-gradient(180deg, var(--amber), transparent);
+      animation:scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%,100% { opacity:.3; transform:scaleY(1); }
+      50%      { opacity:1;  transform:scaleY(1.1); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity:0; transform:translate(-50%, 16px); }
+      to   { opacity:1; transform:translate(-50%, 0); }
+    }
+
+    /* ══════════════════════════════════════════
+       TICKER
+    ══════════════════════════════════════════ */
+    .ticker {
+      overflow:hidden;
+      padding:20px 0;
+      background:var(--carbon);
+      border-top:1px solid var(--line-g);
+      border-bottom:1px solid var(--line-g);
+    }
+
+    .ticker-track {
+      display:flex; width:max-content;
+      animation:tickerRoll 32s linear infinite;
+    }
+
+    @keyframes tickerRoll {
+      from { transform:translateX(0); }
+      to   { transform:translateX(-50%); }
+    }
+
+    .ticker-track p {
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:32px; font-weight:900;
+      letter-spacing:.08em; text-transform:uppercase;
+      white-space:nowrap; color:var(--ivory);
+      padding-right:64px;
+    }
+
+    .ticker-track span { color:var(--amber); margin:0 20px; }
+
+    /* ══════════════════════════════════════════
+       ABOUT — split with image stack
+    ══════════════════════════════════════════ */
+    .about-grid {
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:24px; align-items:stretch;
+    }
+
+    .about-img-stack {
+      position:relative; min-height:660px;
+    }
+
+    .img-primary {
+      position:absolute;
+      top:0; left:0; right:28px; bottom:28px;
+      overflow:hidden;
+      border:1px solid var(--line-g);
+      box-shadow:var(--shadow);
+    }
+
+    .img-primary img {
+      width:100%; height:100%; object-fit:cover;
+      filter:saturate(.8) contrast(1.1);
+      transition:transform .8s cubic-bezier(.16,1,.3,1);
+    }
+
+    .about-img-stack:hover .img-primary img { transform:scale(1.05); }
+
+    .img-secondary {
+      position:absolute;
+      bottom:0; right:0; width:52%; height:45%;
+      overflow:hidden;
+      border:1px solid var(--line-g);
+      box-shadow:var(--shadow);
+    }
+
+    .img-secondary img {
+      width:100%; height:100%; object-fit:cover;
+      filter:saturate(.75) contrast(1.12) brightness(.9);
+      transition:transform .8s cubic-bezier(.16,1,.3,1);
+    }
+
+    .about-img-stack:hover .img-secondary img { transform:scale(1.06); }
+
+    .img-badge {
+      position:absolute; top:28px; right:28px;
+      padding:12px 16px;
+      border:1px solid var(--line-g);
+      background:rgba(8,6,4,.82);
+      backdrop-filter:blur(18px);
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:11px; font-weight:700;
+      letter-spacing:.2em; text-transform:uppercase;
+      color:var(--amber);
+    }
+
+    .about-text {
+      padding:clamp(28px,4vw,56px);
+      background:rgba(26,21,16,.55);
+      border:1px solid var(--line);
+      display:flex; flex-direction:column; justify-content:space-between;
+    }
+
+    .about-text h2 {
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:clamp(60px,7vw,108px);
+      font-weight:900; line-height:.88;
+      letter-spacing:-.01em; text-transform:uppercase;
+    }
+
+    .about-text h2 em {
+      font-style:italic; font-weight:300;
+      color:var(--bone); display:block;
+    }
+
+    .about-text p {
+      color:var(--bone); line-height:1.88;
+      margin-top:20px; font-size:15px;
+    }
+
+    .about-pillars {
+      display:grid; grid-template-columns:1fr 1fr; gap:12px;
+      margin-top:32px;
+    }
+
+    .pillar {
+      padding:18px;
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.28);
+      transition:border-color .25s, background .25s;
+    }
+
+    .pillar:hover { border-color:var(--line-g); background:rgba(232,168,32,.05); }
+
+    .pillar strong {
+      display:block;
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:13px; font-weight:700;
+      letter-spacing:.18em; text-transform:uppercase;
+      color:var(--amber); margin-bottom:6px;
+    }
+
+    .pillar span {
+      font-family: "Inter", sans-serif;
+      color: rgba(240,230,211,.82);
+      font-size: 15px;
+      line-height: 1.7;
+      font-weight: 400;
+    }
+
+    .about-footer {
+      margin-top:36px; padding-top:26px;
+      border-top:1px solid var(--line);
+      display:flex; justify-content:space-between; align-items:flex-end;
+    }
+
+    .sig {
+      font-family:"Libre Baskerville", serif;
+      font-size:34px; font-style:italic;
+      color:var(--amber); line-height:1;
+    }
+
+    .years-badge {
+      text-align:right;
+      font-family:"Barlow Condensed", sans-serif;
+    }
+
+    .years-badge strong {
+      display:block; font-size:56px; font-weight:900;
+      color:var(--gold); line-height:1; letter-spacing:-.03em;
+    }
+
+    .years-badge span {
+      font-size:11px; font-weight:700;
+      letter-spacing:.2em; text-transform:uppercase;
+      color:var(--ash);
+    }
+
+    /* ══════════════════════════════════════════
+       SERVICES — editorial row list
+    ══════════════════════════════════════════ */
+    .services-wrap {
+      background:var(--carbon);
+      border-top:1px solid var(--line);
+      border-bottom:1px solid var(--line);
+    }
+
+    .services-header {
+      display:grid; grid-template-columns:1fr .6fr;
+      gap:42px; align-items:end;
+      margin-bottom:48px;
+    }
+
+    .services-header h2 {
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:clamp(64px,9vw,140px);
+      font-weight:900; line-height:.84;
+      text-transform:uppercase; letter-spacing:-.01em;
+    }
+
+    .services-header p { color:var(--ash); line-height:1.75; font-size:15px; }
+
+    /* featured card */
+    .service-hero-card {
+      position:relative; overflow:hidden;
+      min-height:280px;
+      margin-bottom:2px;
+      display:flex; align-items:flex-end; justify-content:space-between; gap:24px;
+      padding:36px 40px;
+      border:1px solid var(--line-g);
+      isolation:isolate;
+    }
+
+    .service-hero-card::before {
+      content:""; position:absolute; inset:0; z-index:-2;
+      background:url("https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=1600&q=80") center/cover;
+      filter:saturate(.6) contrast(1.1) brightness(.38);
+      transition:transform .8s cubic-bezier(.16,1,.3,1);
+    }
+
+    .service-hero-card:hover::before { transform:scale(1.05); }
+
+    .service-hero-card::after {
+      content:""; position:absolute; inset:0; z-index:-1;
+      background:linear-gradient(90deg, rgba(8,6,4,.9) 0%, rgba(8,6,4,.55) 60%, rgba(8,6,4,.78) 100%);
+    }
+
+    .shc-left .eyebrow { margin-bottom:10px; }
+
+    .shc-left h3 {
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:clamp(48px,6vw,82px);
+      font-weight:900; text-transform:uppercase; line-height:.9;
+    }
+
+    .shc-right { text-align:right; }
+
+    .big-price {
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:clamp(52px,7vw,96px);
+      font-weight:900; line-height:.9; letter-spacing:-.02em;
+      color:var(--gold);
+    }
+
+    .big-price sup { font-size:.45em; vertical-align:top; margin-top:.15em; }
+
+    .shc-right p { color:var(--ash); font-size:13px; margin-top:8px; }
+
+    /* row list */
+    .services-list { border-top:1px solid var(--line); }
+
+    .svc-row {
+      display:grid;
+      grid-template-columns:52px 1fr auto auto;
+      align-items:center;
+      gap:28px; padding:26px 0;
+      border-bottom:1px solid var(--line);
+      cursor:default;
+      position:relative;
+      transition:padding .28s cubic-bezier(.16,1,.3,1);
+    }
+
+    .svc-row::before {
+      content:""; position:absolute;
+      inset:0; margin:0 -24px;
+      background:rgba(232,168,32,.04);
+      opacity:0; border:1px solid transparent;
+      transition:opacity .28s, border-color .28s;
+    }
+
+    .svc-row:hover { padding-left:12px; }
+    .svc-row:hover::before { opacity:1; border-color:var(--line-g); }
+
+    .svc-num {
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:13px; font-weight:700;
+      letter-spacing:.2em; color:var(--amber);
+    }
+
+    .svc-name {
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:clamp(32px,4vw,58px);
+      font-weight:900; text-transform:uppercase; line-height:.9;
+      letter-spacing:.01em;
+    }
+
+    .svc-time {
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:12px; font-weight:700;
+      letter-spacing:.2em; text-transform:uppercase;
+      color:var(--ash); white-space:nowrap;
+    }
+
+    .svc-price {
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:28px; font-weight:900; letter-spacing:-.02em;
+      color:var(--gold); white-space:nowrap;
+    }
+
+    /* ══════════════════════════════════════════
+       CAMPAIGN STRIP
+    ══════════════════════════════════════════ */
     .campaign {
+      position:relative; overflow:hidden;
+      min-height:580px;
+      display:flex; align-items:center;
+      border-top:1px solid var(--line-g);
+      border-bottom:1px solid var(--line-g);
+    }
+
+    .campaign-bg {
+      position:absolute; inset:0;
+    }
+
+    .campaign-bg img {
+      width:100%; height:100%; object-fit:cover;
+      filter:saturate(.5) contrast(1.2) brightness(.3);
+      animation:heroZoom 18s ease-in-out infinite alternate;
+    }
+
+    .campaign-bg::after {
+      content:""; position:absolute; inset:0;
+      background:linear-gradient(105deg, rgba(8,6,4,.92) 40%, rgba(8,6,4,.6) 100%);
+    }
+
+    .campaign-inner {
+      position:relative; z-index:2;
+    }
+
+    .campaign h2 {
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:clamp(80px,13vw,188px);
+      font-weight:900; line-height:.84;
+      text-transform:uppercase; letter-spacing:.01em;
+      max-width:920px;
+    }
+
+    .campaign h2 em {
+      font-style:italic; font-weight:300;
+      color:var(--bone); display:block; font-size:.7em;
+    }
+
+    .campaign-bottom {
+      display:flex; align-items:center; gap:32px; margin-top:36px;
+    }
+
+    .campaign-bottom p {
+      color:var(--bone); font-size:16px; line-height:1.8;
+      max-width:480px; font-style:italic;
+    }
+
+    /* ══════════════════════════════════════════
+       BARBERS
+    ══════════════════════════════════════════ */
+    .barbers-header {
+      display:grid; grid-template-columns:1fr .55fr;
+      gap:42px; align-items:end; margin-bottom:48px;
+    }
+
+    .barbers-header h2 {
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:clamp(64px,9vw,140px);
+      font-weight:900; line-height:.84; text-transform:uppercase;
+    }
+
+    .barbers-header p { color:var(--ash); line-height:1.75; }
+
+    .barbers-grid {
+      display:grid; grid-template-columns:repeat(3,1fr); gap:18px;
+    }
+
+    .barber-card {
+      position:relative; overflow:hidden;
+      min-height:580px;
+      border:1px solid var(--line);
+      cursor:pointer;
+    }
+
+    .barber-card img {
+      width:100%; height:100%; object-fit:cover;
+      filter:grayscale(.18) saturate(.82) contrast(1.1) brightness(.82);
+      transition:transform .7s cubic-bezier(.16,1,.3,1), filter .5s;
+    }
+
+    .barber-card:hover img { transform:scale(1.07); filter:grayscale(.05) saturate(.95) contrast(1.08) brightness(.78); }
+
+    .barber-overlay {
+      position:absolute; inset:0;
+      background:linear-gradient(transparent 38%, rgba(8,6,4,.94) 100%);
+      transition:background .4s;
+    }
+
+    .barber-card:hover .barber-overlay {
+      background:linear-gradient(transparent 28%, rgba(8,6,4,.96) 100%);
+    }
+
+    .barber-info {
+      position:absolute; inset:auto 0 0 0;
+      padding:28px;
+    }
+
+    .barber-num {
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:11px; font-weight:700; letter-spacing:.28em;
+      text-transform:uppercase; color:var(--amber); margin-bottom:10px;
+    }
+
+    .barber-info h3 {
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:clamp(40px,5vw,62px);
+      font-weight:900; line-height:.88; text-transform:uppercase;
+    }
+
+    .barber-info p {
+      color:var(--bone); font-size:13px; font-weight:400;
+      font-style:italic; margin-top:6px;
+    }
+
+    .barber-info .exp {
+      display:inline-flex; align-items:center; gap:8px;
+      margin-top:16px;
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:12px; font-weight:700; letter-spacing:.16em;
+      text-transform:uppercase; color:var(--gold);
+    }
+
+    .barber-info .exp::before {
+      content:""; width:24px; height:1px; background:var(--gold);
+    }
+
+    /* ══════════════════════════════════════════
+       GALLERY
+    ══════════════════════════════════════════ */
+    .gallery-grid {
+      display:grid;
+      grid-template-columns:1.3fr .7fr .7fr;
+      grid-template-rows:420px 280px;
+      gap:12px;
+    }
+
+    .g-cell {
+      overflow:hidden; border:1px solid var(--line); position:relative;
+      background:var(--carbon);
+    }
+
+    .g-cell.span-col { grid-column:span 1; }
+    .g-cell.span-row { grid-row:span 2; }
+
+    .g-cell img {
+      width:100%; height:100%; object-fit:cover;
+      filter:saturate(.75) contrast(1.12);
+      transition:transform .8s cubic-bezier(.16,1,.3,1), filter .5s;
+    }
+
+    .g-cell:hover img { transform:scale(1.07); filter:saturate(.9) contrast(1.1); }
+
+    .g-cell figcaption {
+      position:absolute; left:16px; bottom:16px;
+      padding:8px 14px;
+      background:rgba(8,6,4,.72);
+      border:1px solid var(--line-g);
+      backdrop-filter:blur(14px);
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:11px; font-weight:700; letter-spacing:.2em; text-transform:uppercase;
+      color:var(--amber);
+    }
+
+    /* ══════════════════════════════════════════
+       REVIEWS
+    ══════════════════════════════════════════ */
+    .reviews-bg { background:var(--ink); }
+
+    .reviews-layout {
+      display:grid; grid-template-columns:1.4fr .6fr;
+      gap:18px;
+    }
+
+    .review-hero-card {
+      padding:clamp(32px,5vw,56px);
+      border:1px solid var(--line-g);
+      background:rgba(232,168,32,.06);
+      min-height:420px;
+      display:flex; flex-direction:column; justify-content:space-between;
+    }
+
+    .review-stars { color:var(--gold); letter-spacing:.14em; font-size:14px; margin-bottom:20px; }
+
+    .review-hero-card blockquote {
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:clamp(38px,5vw,66px);
+      font-weight:900; line-height:.9; text-transform:uppercase;
+      letter-spacing:.01em;
+    }
+
+    .review-hero-card blockquote em {
+      font-style:italic; font-weight:300;
+      color:var(--bone); font-size:.7em;
+    }
+
+    .review-hero-card cite {
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:13px; font-weight:700; letter-spacing:.2em; text-transform:uppercase;
+      color:var(--amber); font-style:normal; display:block; margin-top:24px;
+    }
+
+    .review-stack { display:grid; gap:14px; }
+
+    .review-mini {
+      padding:22px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      transition:border-color .25s, background .25s;
+    }
+
+    .review-mini:hover { border-color:var(--line-g); background:rgba(232,168,32,.04); }
+
+    .review-mini .review-stars { font-size:11px; margin-bottom:10px; }
+
+    .review-mini p { color:var(--bone); font-size:14px; line-height:1.72; font-style:italic; }
+
+    .reviewer {
+      margin-top:14px;
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:11px; font-weight:700; letter-spacing:.18em; text-transform:uppercase;
+      color:var(--ash);
+    }
+
+    /* ══════════════════════════════════════════
+       MEMBERSHIP
+    ══════════════════════════════════════════ */
+    .membership-grid {
+      display:grid; grid-template-columns:.95fr 1.05fr; gap:18px; align-items:stretch;
+    }
+
+    .membership-left {
+      padding:clamp(32px,5vw,56px);
+      border:1px solid var(--line-g);
       background:
-        linear-gradient(90deg, rgba(0,0,0,.92), rgba(0,0,0,.50), rgba(0,0,0,.88)),
-        url("https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=1800&q=80") center/cover fixed;
+        radial-gradient(circle at 80% 20%, rgba(200,134,10,.12), transparent 55%),
+        rgba(26,21,16,.7);
+      display:flex; flex-direction:column; justify-content:space-between;
+      min-height:480px;
     }
 
-    .barber-card,
-    .gallery-editorial figure,
-    .image-stack img {
-      border-color: rgba(245,215,161,.14);
+    .membership-left h2 {
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:clamp(64px,8vw,118px);
+      font-weight:900; line-height:.84; text-transform:uppercase;
     }
 
-    .barber-card img,
-    .gallery-editorial img,
-    .image-stack img {
-      filter: grayscale(.14) saturate(.88) contrast(1.1);
+    .membership-left h2 em { font-style:italic; font-weight:300; color:var(--bone); display:block; }
+
+    .membership-left p { color:var(--ash); line-height:1.78; margin-top:18px; }
+
+    .membership-tiers { display:grid; gap:12px; }
+
+    .tier {
+      padding:24px;
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.3);
+      display:grid; grid-template-columns:1fr auto; align-items:center; gap:20px;
+      transition:border-color .28s, background .28s;
+      cursor:default;
     }
 
-    .image-stack img:first-child,
-    .booking-copy {
-      animation: luxuryZoom 14s ease-in-out infinite alternate;
+    .tier:hover { border-color:var(--line-g); background:rgba(232,168,32,.05); }
+
+    .tier h3 {
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:34px; font-weight:900; text-transform:uppercase; letter-spacing:.02em;
     }
 
-    @keyframes luxuryZoom {
-      from { transform: scale(1); }
-      to { transform: scale(1.035); }
+    .tier p { color:var(--ash); font-size:13px; line-height:1.55; margin-top:4px; font-style:italic; }
+
+    .tier-price {
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:32px; font-weight:900; color:var(--gold);
+      letter-spacing:-.02em; white-space:nowrap;
+    }
+
+    .tier-price small {
+      font-size:.5em; color:var(--ash); vertical-align:middle; letter-spacing:.1em;
+    }
+
+    /* ══════════════════════════════════════════
+       BOOKING
+    ══════════════════════════════════════════ */
+    .booking-wrap {
+      background:var(--carbon);
+      border-top:1px solid var(--line);
+    }
+
+    .booking-inner {
+      display:grid; grid-template-columns:.82fr 1.18fr;
+      gap:18px; align-items:stretch;
+    }
+
+    .booking-left {
+      position:relative; overflow:hidden;
+      min-height:580px;
+      border:1px solid var(--line-g);
+    }
+
+    .booking-left-bg {
+      position:absolute; inset:0;
+    }
+
+    .booking-left-bg img {
+      width:100%; height:100%; object-fit:cover;
+      filter:saturate(.6) contrast(1.1) brightness(.35);
+    }
+
+    .booking-left-bg::after {
+      content:""; position:absolute; inset:0;
+      background:
+        linear-gradient(180deg, rgba(8,6,4,.42) 0%, rgba(8,6,4,.84) 100%),
+        linear-gradient(90deg, rgba(8,6,4,.7), rgba(8,6,4,.2));
+    }
+
+    .booking-left-content {
+      position:relative; z-index:2;
+      padding:clamp(28px,4vw,52px);
+      height:100%;
+      display:flex; flex-direction:column; justify-content:space-between;
+    }
+
+    .booking-left h2 {
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:clamp(56px,7vw,100px);
+      font-weight:900; line-height:.84; text-transform:uppercase;
+    }
+
+    .booking-left h2 em { font-style:italic; font-weight:300; color:var(--bone); }
+
+    .hours { display:grid; gap:10px; }
+
+    .hours div {
+      display:flex; justify-content:space-between; gap:16px;
+      padding-bottom:10px; border-bottom:1px solid var(--line);
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:14px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+      color:var(--ash);
+    }
+
+    .hours strong { color:var(--ivory); }
+
+    /* form */
+    .booking-form {
+      padding:clamp(28px,4vw,48px);
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.32);
+    }
+
+    .form-title {
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:42px; font-weight:900; text-transform:uppercase; letter-spacing:.02em;
+      margin-bottom:24px; color:var(--ivory);
+    }
+
+    .fg { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .ff { display:grid; gap:7px; }
+    .ff.full { grid-column:1/-1; }
+
+    label {
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:11px; font-weight:700; letter-spacing:.22em; text-transform:uppercase;
+      color:var(--ash);
     }
 
     input, select, textarea {
-      background: rgba(255,255,255,.06);
-      border-color: rgba(245,215,161,.15);
+      width:100%; padding:14px 16px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.05);
+      color:var(--ivory); outline:0;
+      transition:border-color .22s, background .22s;
+      font-family:"Libre Baskerville", serif;
     }
+
+    input::placeholder, textarea::placeholder { color:var(--ash); font-style:italic; }
+
+    select option { background:var(--carbon); }
 
     input:focus, select:focus, textarea:focus {
-      border-color: rgba(216,168,79,.65);
-      box-shadow: 0 0 0 4px rgba(216,168,79,.12);
+      border-color:rgba(232,168,32,.55);
+      background:rgba(232,168,32,.04);
+      box-shadow:0 0 0 3px rgba(232,168,32,.1);
     }
 
+    textarea { min-height:110px; resize:vertical; }
+
+    .form-note {
+      margin-top:14px; font-style:italic;
+      color:var(--ash); font-size:13px; line-height:1.6;
+    }
+
+    /* ══════════════════════════════════════════
+       FAQ
+    ══════════════════════════════════════════ */
+    .faq-layout {
+      display:grid; grid-template-columns:.68fr 1.32fr;
+      gap:48px; align-items:start;
+    }
+
+    .faq-left h2 {
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:clamp(64px,8vw,118px);
+      font-weight:900; line-height:.84; text-transform:uppercase;
+    }
+
+    .faq-left p { color:var(--ash); line-height:1.78; margin-top:18px; }
+
+    .faq-stack { display:grid; gap:10px; }
+
+    .faq-item {
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      overflow:hidden;
+      transition:border-color .25s;
+    }
+
+    .faq-item.open { border-color:var(--line-g); }
+
+    .faq-q {
+      width:100%; padding:20px 22px;
+      display:flex; justify-content:space-between; align-items:center; gap:20px;
+      border:0; background:transparent; cursor:pointer;
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:18px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+      color:var(--ivory); text-align:left;
+      transition:color .22s;
+    }
+
+    .faq-q:hover { color:var(--gold); }
+
+    .faq-icon {
+      width:28px; height:28px; flex-shrink:0;
+      border:1px solid var(--line-g);
+      display:grid; place-items:center;
+      color:var(--amber); font-size:20px;
+      transition:transform .3s, background .25s;
+    }
+
+    .faq-item.open .faq-icon {
+      transform:rotate(45deg);
+      background:var(--amber); color:var(--void); border-color:var(--amber);
+    }
+
+    .faq-a { max-height:0; overflow:hidden; transition:max-height .38s cubic-bezier(.16,1,.3,1); }
+    .faq-a p { padding:0 22px 20px; color:var(--ash); line-height:1.75; font-size:14px; font-style:italic; }
+    .faq-item.open .faq-a { max-height:200px; }
+
+    /* ══════════════════════════════════════════
+       CONTACT + FOOTER
+    ══════════════════════════════════════════ */
+    .contact-band {
+      padding:40px 0;
+      background:var(--ink);
+      border-top:1px solid var(--line-g);
+      border-bottom:1px solid var(--line-g);
+    }
+
+    .contact-cells {
+      display:grid; grid-template-columns:repeat(4,1fr); gap:12px;
+    }
+
+    .cc {
+      padding:22px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      transition:border-color .25s, background .25s;
+    }
+
+    .cc:hover { border-color:var(--line-g); background:rgba(232,168,32,.04); }
+
+    .cc small {
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:10px; font-weight:700; letter-spacing:.28em; text-transform:uppercase;
+      color:var(--amber); display:block; margin-bottom:10px;
+    }
+
+    .cc p { color:var(--bone); font-weight:700; line-height:1.5; }
+
+    footer { padding:54px 0 88px; }
+
+    .footer-inner {
+      display:flex; justify-content:space-between; align-items:flex-start; gap:28px;
+      padding-bottom:24px; border-bottom:1px solid var(--line);
+    }
+
+    .footer-brand p { color:var(--ash); line-height:1.7; max-width:400px; margin-top:12px; font-style:italic; }
+
+    .footer-links {
+      display:flex; flex-wrap:wrap; gap:16px;
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:12px; font-weight:700; letter-spacing:.2em; text-transform:uppercase;
+      color:var(--ash);
+    }
+
+    .footer-links a:hover { color:var(--gold); }
+
+    .copyright { margin-top:20px; color:rgba(240,230,211,.28); font-size:12px; font-style:italic; }
+
+    /* ── mobile sticky CTA ── */
     .mobile-cta {
-      background: linear-gradient(135deg, var(--gold-soft), var(--gold), #9d6b24);
-      color: #120d08;
-      box-shadow: 0 20px 60px rgba(0,0,0,.38);
+      display:none;
+      position:fixed; left:14px; right:14px; bottom:14px; z-index:90;
+      min-height:58px; align-items:center; justify-content:center;
+      background:linear-gradient(135deg, var(--gilt), var(--gold), var(--amber));
+      color:var(--void);
+      font-family:"Barlow Condensed", sans-serif;
+      font-size:16px; font-weight:900; letter-spacing:.14em; text-transform:uppercase;
+      box-shadow:0 20px 60px rgba(0,0,0,.45);
     }
 
-    .reveal.delay-1 { transition-delay: .08s; }
-    .reveal.delay-2 { transition-delay: .16s; }
-    .reveal.delay-3 { transition-delay: .24s; }
-
-    .btn,
-    .service-row,
-    .barber-card img,
-    .gallery-editorial img,
-    .membership-list div,
-    .faq-item,
-    .contact-item {
-      will-change: transform;
+    /* ── back top ── */
+    .back-top {
+      position:fixed; right:18px; bottom:24px; z-index:80;
+      width:46px; height:46px;
+      border:1px solid var(--line-g);
+      background:rgba(8,6,4,.88);
+      color:var(--amber); font-size:20px;
+      display:grid; place-items:center;
+      cursor:pointer;
+      opacity:0; transform:translateY(14px); pointer-events:none;
+      transition:.25s;
     }
 
+    .back-top.show { opacity:1; transform:translateY(0); pointer-events:auto; }
+
+    /* ══════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════ */
+    @media (max-width:1020px) {
+      .nav-inner { grid-template-columns:1fr auto; }
+      .nav-links, .nav-actions .btn-ghost { display:none; }
+      .menu-btn { display:grid; place-items:center; }
+      .hero-inner, .about-grid, .booking-inner, .faq-layout { grid-template-columns:1fr; }
+      .hero-right { display:none; }
+      .barbers-grid { grid-template-columns:1fr 1fr; }
+      .services-header, .barbers-header { grid-template-columns:1fr; }
+      .reviews-layout { grid-template-columns:1fr; }
+      .membership-grid { grid-template-columns:1fr; }
+      .gallery-grid { grid-template-columns:1fr 1fr; grid-template-rows:auto; }
+      .g-cell.span-row { grid-row:span 1; }
+      .contact-cells { grid-template-columns:repeat(2,1fr); }
+    }
+
+    @media (max-width:680px) {
+      body { cursor:auto; }
+      .cursor-dot, .cursor-ring { display:none; }
+      .section { padding:82px 0; }
+      .hero { padding:110px 0 70px; }
+      .hero h1 { font-size:clamp(72px,20vw,110px); }
+      .barbers-grid, .about-pillars, .fg, .contact-cells { grid-template-columns:1fr; }
+      .gallery-grid { grid-template-columns:1fr; }
+      .g-cell { height:300px; }
+      .g-cell.span-row { grid-row:span 1; }
+      .svc-row { grid-template-columns:32px 1fr auto; }
+      .svc-time { display:none; }
+      .about-img-stack { min-height:440px; }
+      .membership-left { min-height:auto; }
+      .mobile-cta { display:flex; }
+      footer { padding-bottom:100px; }
+      .hero-actions .btn { width:100%; }
+      .footer-inner { flex-direction:column; }
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+      .ticker-track { animation-duration:32s !important; animation-iteration-count:infinite !important; }
+      .razor-line::after { animation-duration:0s; }
+      .hero-bg img, .campaign-bg img { animation:none; }
+    }
   </style>
 </head>
-
 <body>
-  <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
-  <div class="noise"></div>
 
+  <!-- CURSOR -->
+  <div class="cursor-dot"  id="cursorDot"  aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+
+  <!-- ══════════ NAV ══════════ -->
   <nav class="nav" id="nav">
     <div class="nav-inner">
-      <a href="#top" class="logo">Trim <span></span> Reaper</a>
+      <a href="#top" class="logo">Trim<em class="logo-badge"></em><em style="color:var(--gold)">Reaper</em></a>
 
       <div class="nav-links" id="navLinks">
         <a href="#about">Story</a>
-        <a href="#services">Menu</a>
+        <a href="#services">Services</a>
         <a href="#barbers">Barbers</a>
         <a href="#gallery">Work</a>
+        <a href="#reviews">Reviews</a>
         <a href="#booking">Book</a>
       </div>
 
       <div class="nav-actions">
-        <a href="tel:+15551234567" class="btn btn-secondary">Call Now</a>
-        <a href="#booking" class="btn btn-primary">Book A Chair</a>
-        <button class="menu-btn" id="menuBtn" aria-label="Open navigation">☰</button>
+        <a href="tel:+13125550141" class="btn btn-ghost">Call</a>
+        <a href="#booking" class="btn btn-gold">Book A Chair →</a>
+        <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
       </div>
     </div>
   </nav>
 
+  <!-- ══════════ HERO ══════════ -->
   <header class="hero" id="top">
-    <div class="container hero-content">
-      <div class="hero-copy reveal">
-        <div class="eyebrow">Premium grooming studio</div>
-        <h1 class="display">Sharp Cuts.<br><span>No Weak</span> Details.</h1>
-        <p>A cinematic barbershop experience built for precision fades, clean beard work, hot towel finishes, and the kind of confidence people notice.</p>
+    <div class="hero-bg">
+      <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=1800&q=80" loading="eager" alt="Barbershop interior">
+    </div>
+    <div class="hero-watermark" aria-hidden="true">TRIM REAPER</div>
 
+    <div class="container hero-inner">
+      <div class="hero-left reveal">
+        <div class="hero-kicker">Chicago's Premier Grooming Studio</div>
+        <h1>
+          <span class="line-italic">The Art of</span>
+          Sharp<br><span class="line-gold">Precision.</span>
+        </h1>
+        <p class="hero-desc">Precision fades, hot towel shaves, and a studio built around the details most barbers skip. Every cut ends with a mirror check — and a look that holds.</p>
         <div class="hero-actions">
-          <a href="#booking" class="btn btn-primary">Reserve Appointment →</a>
-          <a href="#services" class="btn btn-secondary">View Services</a>
+          <a href="#booking" class="btn btn-gold">Reserve Your Chair →</a>
+          <a href="#services" class="btn btn-ghost">View Services</a>
         </div>
       </div>
 
-      <aside class="hero-panel reveal">
-        <h3 class="display">Today’s Standard</h3>
-        <div class="hero-stat"><span>Client rating</span><strong>4.9★</strong></div>
-        <div class="hero-stat"><span>Cuts served</span><strong>7K+</strong></div>
-        <div class="hero-stat"><span>Avg session</span><strong>45M</strong></div>
+      <aside class="hero-right reveal d2">
+        <div class="hero-panel">
+          <div class="hero-panel-title">Today's Standard</div>
+          <div class="panel-stat">
+            <span class="label">Client Rating</span>
+            <span class="val">4.9★</span>
+          </div>
+          <div class="panel-stat">
+            <span class="label">Cuts Served</span>
+            <span class="val">7K+</span>
+          </div>
+          <div class="panel-stat">
+            <span class="label">Avg Session</span>
+            <span class="val">45m</span>
+          </div>
+          <div class="panel-stat">
+            <span class="label">Years Open</span>
+            <span class="val">11</span>
+          </div>
+        </div>
       </aside>
     </div>
+
+    <div class="scroll-hint" aria-hidden="true">Scroll</div>
   </header>
 
-  <section class="marquee" aria-label="Service highlights">
-    <div class="marquee-track">
-      <p>Precision Fades <span>•</span> Beard Sculpting <span>•</span> Hot Towel Shaves <span>•</span> Luxury Grooming <span>•</span> Same-Day Booking <span>•</span></p>
-      <p>Precision Fades <span>•</span> Beard Sculpting <span>•</span> Hot Towel Shaves <span>•</span> Luxury Grooming <span>•</span> Same-Day Booking <span>•</span></p>
+  <!-- TICKER -->
+  <section class="ticker" aria-label="Service highlights">
+    <div class="ticker-track">
+      <p>Precision Fades <span>•</span> Beard Sculpting <span>•</span> Hot Towel Shaves <span>•</span> Skin Fades <span>•</span> Razor Line-Ups <span>•</span> Same-Day Booking <span>•</span></p>
+      <p>Precision Fades <span>•</span> Beard Sculpting <span>•</span> Hot Towel Shaves <span>•</span> Skin Fades <span>•</span> Razor Line-Ups <span>•</span> Same-Day Booking <span>•</span></p>
     </div>
   </section>
 
+  <!-- ══════════ ABOUT ══════════ -->
   <section class="section" id="about">
-    <div class="container split-editorial">
-      <div class="image-stack reveal">
-        <img src="https://images.unsplash.com/photo-1634449571010-02389ed0f9b0?auto=format&fit=crop&w=1200&q=80" alt="Luxury barbershop interior">
-        <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=900&q=80" alt="Barber tools and chair">
-      </div>
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-img-stack reveal left">
+          <div class="img-primary">
+            <img src="https://images.unsplash.com/photo-1634449571010-02389ed0f9b0?auto=format&fit=crop&w=1200&q=80" loading="lazy" alt="Barbershop interior">
+          </div>
+          <div class="img-secondary">
+            <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=900&q=80" loading="lazy" alt="Barber tools">
+          </div>
+          <div class="img-badge">Est. 2013 · Chicago</div>
+        </div>
 
-      <div class="editorial-copy reveal">
-        <div class="eyebrow">The Iron Standard</div>
-        <h2 class="display">Not Just A Cut. A Full Reset.</h2>
-        <p>Trim Reaper blends classic barbering with a modern studio feel. Every appointment starts with a quick consultation and ends with clean detail work, a finished style, and a look built around your face shape and lifestyle.</p>
+        <div class="about-text reveal right">
+          <div>
+            <div class="eyebrow">The Iron Standard</div>
+            <h2>Not Just<br>A Cut.<br><em>A Reset.</em></h2>
+            <p>Trim Reaper blends classic barbering craft with a sharp, modern studio environment. Every appointment opens with a consultation and closes with razor-clean detail work — because the difference between a good cut and a great one lives in the last five minutes.</p>
 
-        <div class="bullet-grid">
-          <div class="bullet"><strong>Consult First</strong><span>We ask about style, routine, hair type, and the look you want before touching the clippers.</span></div>
-          <div class="bullet"><strong>Clean Tools</strong><span>Every station is reset, every tool is sanitized, and every appointment feels professional.</span></div>
-          <div class="bullet"><strong>Sharp Finish</strong><span>Razor lines, neckline polish, beard balance, and product finish complete the look.</span></div>
-          <div class="bullet"><strong>Easy Booking</strong><span>Clear service options and fast appointment requests help visitors become clients.</span></div>
+            <div class="about-pillars">
+              <div class="pillar"><strong>Consult First</strong><span>We ask about your style, lifestyle, and face shape before touching the clippers.</span></div>
+              <div class="pillar"><strong>Clean Tools</strong><span>Every station reset, every tool sanitized — every single appointment.</span></div>
+              <div class="pillar"><strong>Sharp Finish</strong><span>Razor lines, neckline detail, beard balance, product finish. Nothing skipped.</span></div>
+              <div class="pillar"><strong>Easy Booking</strong><span>Clear services, transparent prices, and a fast appointment request form.</span></div>
+            </div>
+          </div>
+
+          <div class="about-footer">
+            <div class="sig">Trim Reaper</div>
+            <div class="years-badge">
+              <strong>11</strong>
+              <span>Years in the game</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section" id="services">
+  <div class="razor-line"></div>
+
+  <!-- ══════════ SERVICES ══════════ -->
+  <section class="section services-wrap" id="services">
     <div class="container">
-      <div class="section-title reveal">
+      <div class="services-header reveal">
         <div>
           <div class="eyebrow">Service Menu</div>
-          <h2 class="display">Choose Your Standard.</h2>
+          <h2>Choose<br>Your<br>Standard.</h2>
         </div>
-        <p>This version uses a bold editorial menu instead of the same card grid from your nail website.</p>
+        <p>Clear services. Transparent pricing. No upsells at the chair. Every service includes full consultation, prep, and a finished look built around you.</p>
       </div>
 
-      <div class="services-list">
-        <article class="service-row reveal">
-          <small>01</small>
-          <h3>Signature Cut + Beard</h3>
-          <p>Precision haircut, beard sculpting, razor detailing, hot towel finish, and premium styling.</p>
-          <strong>$65</strong>
+      <div class="reveal">
+        <article class="service-hero-card">
+          <div class="shc-left">
+            <div class="eyebrow">Signature Service</div>
+            <h3>Cut + Beard + Hot Towel</h3>
+            <p style="color:var(--bone);font-size:14px;margin-top:10px;font-style:italic;">The full experience — precision cut, sculpted beard, razor detail, hot towel finish, and styled product.</p>
+            <a href="#booking" class="btn btn-gold" style="margin-top:22px;">Book This →</a>
+          </div>
+          <div class="shc-right">
+            <div class="big-price"><sup>$</sup>72</div>
+            <p>75 minutes · Everything included</p>
+          </div>
         </article>
 
-        <article class="service-row reveal">
-          <small>02</small>
-          <h3>Precision Haircut</h3>
-          <p>Clean consultation, tailored cut, neckline cleanup, and finished style.</p>
-          <strong>$40</strong>
-        </article>
-
-        <article class="service-row reveal">
-          <small>03</small>
-          <h3>Skin Fade</h3>
-          <p>Detailed fade work with smooth blending and sharp edge refinement.</p>
-          <strong>$35</strong>
-        </article>
-
-        <article class="service-row reveal">
-          <small>04</small>
-          <h3>Beard Sculpt</h3>
-          <p>Shape, trim, razor line-up, and conditioning finish for a clean profile.</p>
-          <strong>$28</strong>
-        </article>
-
-        <article class="service-row reveal">
-          <small>05</small>
-          <h3>Hot Towel Shave</h3>
-          <p>Classic straight razor service with steam towel prep and cooling finish.</p>
-          <strong>$45</strong>
-        </article>
+        <div class="services-list">
+          <article class="svc-row reveal">
+            <span class="svc-num">01</span>
+            <span class="svc-name">Precision Haircut</span>
+            <span class="svc-time">45 min</span>
+            <span class="svc-price">$42</span>
+          </article>
+          <article class="svc-row reveal d1">
+            <span class="svc-num">02</span>
+            <span class="svc-name">Skin Fade</span>
+            <span class="svc-time">40 min</span>
+            <span class="svc-price">$38</span>
+          </article>
+          <article class="svc-row reveal d2">
+            <span class="svc-num">03</span>
+            <span class="svc-name">Beard Sculpt</span>
+            <span class="svc-time">30 min</span>
+            <span class="svc-price">$30</span>
+          </article>
+          <article class="svc-row reveal d1">
+            <span class="svc-num">04</span>
+            <span class="svc-name">Hot Towel Shave</span>
+            <span class="svc-time">45 min</span>
+            <span class="svc-price">$48</span>
+          </article>
+          <article class="svc-row reveal d2">
+            <span class="svc-num">05</span>
+            <span class="svc-name">Razor Line-Up</span>
+            <span class="svc-time">20 min</span>
+            <span class="svc-price">$22</span>
+          </article>
+          <article class="svc-row reveal d3">
+            <span class="svc-num">06</span>
+            <span class="svc-name">Kid's Cut</span>
+            <span class="svc-time">30 min</span>
+            <span class="svc-price">$28</span>
+          </article>
+        </div>
       </div>
     </div>
   </section>
 
+  <!-- ══════════ CAMPAIGN ══════════ -->
   <section class="campaign">
-    <div class="container reveal">
+    <div class="campaign-bg">
+      <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=1800&q=80" loading="lazy" alt="Barbershop atmosphere">
+    </div>
+    <div class="container campaign-inner reveal">
       <div class="eyebrow">The Experience</div>
-      <h2 class="display">Details Make The Difference.</h2>
-      <p>From consultation to final mirror check, the shop is built around presentation, precision, and a clean atmosphere clients trust.</p>
+      <h2>Details<br>Make The<br><em>Difference.</em></h2>
+      <div class="campaign-bottom">
+        <p>From consultation to the final mirror check, the shop is built around presentation, precision, and a clean atmosphere that feels like it cost more than it did.</p>
+        <a href="#booking" class="btn btn-gold">Book Now →</a>
+      </div>
     </div>
   </section>
 
+  <!-- ══════════ BARBERS ══════════ -->
   <section class="section" id="barbers">
     <div class="container">
-      <div class="section-title reveal">
+      <div class="barbers-header reveal">
         <div>
           <div class="eyebrow">Meet The Barbers</div>
-          <h2 class="display">Artists Behind The Chair.</h2>
+          <h2>Artists<br>Behind<br>The Chair.</h2>
         </div>
-        <p>Large portrait cards make the team feel like a premium brand instead of a basic service directory.</p>
+        <p>Three specialists, each with their own edge. Book your barber or let us pair you with the right fit for your style and hair type.</p>
       </div>
 
-      <div class="barbers-showcase">
+      <div class="barbers-grid">
         <article class="barber-card reveal">
-          <img src="https://images.unsplash.com/photo-1588771930296-88c2cb03f386?auto=format&fit=crop&w=900&q=80" alt="Master barber Marcus">
+          <img src="https://images.unsplash.com/photo-1588771930296-88c2cb03f386?auto=format&fit=crop&w=900&q=80" loading="lazy" alt="Marcus King">
+          <div class="barber-overlay"></div>
           <div class="barber-info">
-            <h3 class="display">Marcus King</h3>
-            <p>Master Fades / Beard Work</p>
-            <span>8 years experience</span>
+            <div class="barber-num">Barber 01</div>
+            <h3>Marcus King</h3>
+            <p>Master Fades · Beard Architecture</p>
+            <div class="exp">8 years experience</div>
           </div>
         </article>
 
-        <article class="barber-card reveal">
-          <img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?auto=format&fit=crop&w=900&q=80" alt="Senior barber Jay">
+        <article class="barber-card reveal d1">
+          <img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?auto=format&fit=crop&w=900&q=80" loading="lazy" alt="Jay Carter">
+          <div class="barber-overlay"></div>
           <div class="barber-info">
-            <h3 class="display">Jay Carter</h3>
-            <p>Skin Fades / Texture Cuts</p>
-            <span>6 years experience</span>
+            <div class="barber-num">Barber 02</div>
+            <h3>Jay Carter</h3>
+            <p>Skin Fades · Texture Cuts</p>
+            <div class="exp">6 years experience</div>
           </div>
         </article>
 
-        <article class="barber-card reveal">
-          <img src="https://images.unsplash.com/photo-1622287162716-f311baa1a2b8?auto=format&fit=crop&w=900&q=80" alt="Barber Anthony">
+        <article class="barber-card reveal d2">
+          <img src="https://images.unsplash.com/photo-1622287162716-f311baa1a2b8?auto=format&fit=crop&w=900&q=80" loading="lazy" alt="Anthony Miles">
+          <div class="barber-overlay"></div>
           <div class="barber-info">
-            <h3 class="display">Anthony Miles</h3>
-            <p>Classic Cuts / Razor Shaves</p>
-            <span>5 years experience</span>
+            <div class="barber-num">Barber 03</div>
+            <h3>Anthony Miles</h3>
+            <p>Classic Cuts · Straight Razor Shaves</p>
+            <div class="exp">5 years experience</div>
           </div>
         </article>
       </div>
     </div>
   </section>
 
-  <section class="section" id="gallery">
+  <!-- ══════════ GALLERY ══════════ -->
+  <section class="section" id="gallery" style="padding-top:0;">
     <div class="container">
-      <div class="section-title reveal">
-        <div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:40px;">
+        <div class="reveal">
           <div class="eyebrow">Gallery</div>
-          <h2 class="display">Proof That Sells.</h2>
+          <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(56px,8vw,112px);font-weight:900;line-height:.84;text-transform:uppercase;">The Work<br>Speaks.</h2>
         </div>
-        <p>This gallery is more campaign-style and less like the soft grid from your nail website.</p>
+        <p class="reveal d1" style="color:var(--ash);max-width:340px;line-height:1.75;font-style:italic;">Replace with real client work photos before launch. Gallery is the strongest trust builder on any service site.</p>
       </div>
 
-      <div class="gallery-editorial">
-        <div class="gallery-column">
-          <figure class="gallery-big reveal">
-            <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=1400&q=80" alt="Clean fade result">
-            <figcaption>Clean Fade</figcaption>
-          </figure>
-        </div>
-
-        <div class="gallery-column">
-          <figure class="gallery-small reveal">
-            <img src="https://images.unsplash.com/photo-1517832606299-7ae9b720a186?auto=format&fit=crop&w=900&q=80" alt="Razor detail">
-            <figcaption>Razor Detail</figcaption>
-          </figure>
-          <figure class="gallery-small reveal">
-            <img src="https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&w=900&q=80" alt="Beard shaping">
-            <figcaption>Beard Shape</figcaption>
-          </figure>
-        </div>
+      <div class="gallery-grid">
+        <figure class="g-cell span-row reveal">
+          <img src="https://i.pinimg.com/736x/8d/f8/31/8df831b9aca8866d0e16277b916cb5f5.jpg" loading="lazy" alt="Clean fade">
+          <figcaption>Clean Fade</figcaption>
+        </figure>
+        <figure class="g-cell reveal d1">
+          <img src="https://i1-c.pinimg.com/736x/e5/5f/bc/e55fbc1ee12187ac7d5c98f6625280f6.jpg" loading="lazy" alt="Razor detail">
+          <figcaption>Razor Detail</figcaption>
+        </figure>
+        <figure class="g-cell reveal d2">
+          <img src="https://i1-c.pinimg.com/736x/b4/b5/9c/b4b59cf485ba4fb1e6ed24c6d648c945.jpg" loading="lazy" alt="Beard shape">
+          <figcaption>Beard Shape</figcaption>
+        </figure>
+        <figure class="g-cell reveal d1">
+          <img src="https://i1-c.pinimg.com/1200x/ec/2a/8c/ec2a8cd21fae649fe3ff19b7da4b4355.jpg" loading="lazy" alt="Studio shot">
+          <figcaption>Studio</figcaption>
+        </figure>
+        <figure class="g-cell reveal d2">
+          <img src="https://i.pinimg.com/736x/33/e4/c0/33e4c0ea9f717c219e1957d291b57ed1.jpg" loading="lazy" alt="Precision work">
+          <figcaption>Precision</figcaption>
+        </figure>
       </div>
     </div>
   </section>
 
-  <section class="section reviews" id="reviews">
+  <div class="razor-line"></div>
+
+  <!-- ══════════ REVIEWS ══════════ -->
+  <section class="section reviews-bg" id="reviews">
     <div class="container">
-      <div class="section-title reveal">
-        <div>
-          <div class="eyebrow">Client Reviews</div>
-          <h2 class="display">Trust Before They Book.</h2>
-        </div>
-        <p>Keep reviews close to the booking section so visitors feel safe saying yes.</p>
+      <div style="margin-bottom:44px;" class="reveal">
+        <div class="eyebrow">Client Reviews</div>
+        <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(64px,9vw,132px);font-weight:900;line-height:.84;text-transform:uppercase;">Trust Before<br>They Sit Down.</h2>
       </div>
 
-      <div class="reviews-grid">
-        <article class="review-card reveal">
+      <div class="reviews-layout">
+        <article class="review-hero-card reveal">
           <div>
-            <div class="stars">★★★★★</div>
-            <p>“Best fade I’ve had in years. The shop feels upscale, the service is smooth, and the cut came out exactly how I wanted.”</p>
+            <div class="review-stars">★★★★★</div>
+            <blockquote>"Best fade I've had in years. The shop feels upscale, the barber was on point, and the cut held better than anything else I've tried. <em>Won't go anywhere else.</em>"</blockquote>
           </div>
-          <div class="reviewer">Devon M. / Skin Fade</div>
+          <cite>Devon M. — Skin Fade</cite>
         </article>
 
-        <article class="review-card reveal">
-          <div>
-            <div class="stars">★★★★★</div>
-            <p>“You can tell they care about details. Beard line was sharp, haircut was clean, and the hot towel finish made it feel premium.”</p>
-          </div>
-          <div class="reviewer">Ramon T. / Beard Sculpt</div>
-        </article>
-
-        <article class="review-card reveal">
-          <div>
-            <div class="stars">★★★★★</div>
-            <p>“Booked online in under a minute. The shop is clean, professional, and the cut looked even better the next day.”</p>
-          </div>
-          <div class="reviewer">Kai B. / Signature Cut</div>
-        </article>
+        <div class="review-stack">
+          <article class="review-mini reveal d1">
+            <div class="review-stars">★★★★★</div>
+            <p>"You can tell they care about details. Beard line was sharp, cut was clean, and the hot towel at the end made it feel like a proper experience."</p>
+            <div class="reviewer">Ramon T. — Signature Cut + Beard</div>
+          </article>
+          <article class="review-mini reveal d2">
+            <div class="review-stars">★★★★★</div>
+            <p>"Booked online in under a minute. The shop is clean, professional, and the cut looked even better three days later."</p>
+            <div class="reviewer">Kai B. — Precision Haircut</div>
+          </article>
+        </div>
       </div>
     </div>
   </section>
 
+  <!-- ══════════ MEMBERSHIP ══════════ -->
   <section class="section" id="membership">
-    <div class="container membership">
-      <div class="membership-card reveal">
-        <div>
-          <div class="eyebrow">Membership</div>
-          <h2 class="display">Stay Sharp Every Month.</h2>
-          <p>Add this section to make the barbershop feel more premium and create recurring revenue for the business.</p>
+    <div class="container">
+      <div class="membership-grid">
+        <div class="membership-left reveal">
+          <div>
+            <div class="eyebrow">Chair Club</div>
+            <h2>Stay<br>Sharp<br><em>Every Month.</em></h2>
+            <p>Membership keeps you looking consistent without thinking about it. Priority booking, locked pricing, and no more waiting until the weekend before a big event.</p>
+          </div>
+          <a href="#booking" class="btn btn-gold" style="margin-top:32px;">Join The Chair Club →</a>
         </div>
-        <a href="#booking" class="btn btn-primary">Join The Chair Club</a>
-      </div>
 
-      <div class="membership-list">
-        <div class="reveal">
-          <div>
-            <h3>Monthly Edge</h3>
-            <p>One precision cut per month with priority booking.</p>
+        <div class="membership-tiers reveal d1">
+          <div class="tier">
+            <div>
+              <h3>Monthly Edge</h3>
+              <p>One precision cut per month with priority booking over walk-ins.</p>
+            </div>
+            <div class="tier-price">$49<small>/mo</small></div>
           </div>
-          <strong>$49/mo</strong>
-        </div>
-        <div class="reveal">
-          <div>
-            <h3>Executive Grooming</h3>
-            <p>Two cuts, beard sculpting, and hot towel finish every month.</p>
+          <div class="tier">
+            <div>
+              <h3>Executive Grooming</h3>
+              <p>Two cuts, beard sculpting, and hot towel finish every month.</p>
+            </div>
+            <div class="tier-price">$99<small>/mo</small></div>
           </div>
-          <strong>$99/mo</strong>
-        </div>
-        <div class="reveal">
-          <div>
-            <h3>Always Sharp</h3>
-            <p>Weekly line-up refreshes for clients who need to stay clean.</p>
+          <div class="tier">
+            <div>
+              <h3>Always Sharp</h3>
+              <p>Weekly razor line-up refreshes. For clients who need to stay clean.</p>
+            </div>
+            <div class="tier-price">$129<small>/mo</small></div>
           </div>
-          <strong>$129/mo</strong>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section" id="booking">
-    <div class="container booking-layout">
-      <div class="booking-copy reveal">
-        <div>
-          <div class="eyebrow">Book Now</div>
-          <h2 class="display">Leave Sharper Than You Arrived.</h2>
-          <p>Use this form as a premium appointment request. Later, replace it with Calendly, Square, Booksy, or the client’s real booking link.</p>
+  <!-- ══════════ BOOKING ══════════ -->
+  <section class="section booking-wrap" id="booking">
+    <div class="container">
+      <div class="booking-inner">
+        <div class="booking-left reveal">
+          <div class="booking-left-bg">
+            <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=1400&q=80" loading="lazy" alt="Barbershop chair">
+          </div>
+          <div class="booking-left-content">
+            <div>
+              <div class="eyebrow">Reservations</div>
+              <h2>Leave Sharper<br>Than You<br><em>Arrived.</em></h2>
+            </div>
+            <div class="hours">
+              <div><strong>Mon – Thu</strong><span>9 AM – 7 PM</span></div>
+              <div><strong>Friday</strong><span>9 AM – 8 PM</span></div>
+              <div><strong>Saturday</strong><span>8 AM – 6 PM</span></div>
+              <div><strong>Sunday</strong><span>Closed</span></div>
+            </div>
+          </div>
         </div>
 
-        <div class="hours-list">
-          <div><strong>Mon - Thu</strong><span>9:00 AM - 7:00 PM</span></div>
-          <div><strong>Friday</strong><span>9:00 AM - 8:00 PM</span></div>
-          <div><strong>Saturday</strong><span>8:00 AM - 6:00 PM</span></div>
-          <div><strong>Sunday</strong><span>Closed</span></div>
-        </div>
+        <form class="booking-form reveal d1" id="bookingForm">
+          <div class="form-title">Request a Chair</div>
+          <div class="fg">
+            <div class="ff">
+              <label for="bname">Name</label>
+              <input id="bname" type="text" placeholder="Your name" required>
+            </div>
+            <div class="ff">
+              <label for="bphone">Phone</label>
+              <input id="bphone" type="tel" placeholder="(312) 555-0141" required>
+            </div>
+            <div class="ff">
+              <label for="bservice">Service</label>
+              <select id="bservice" required>
+                <option value="">Choose service</option>
+                <option>Signature Cut + Beard + Hot Towel — $72</option>
+                <option>Precision Haircut — $42</option>
+                <option>Skin Fade — $38</option>
+                <option>Beard Sculpt — $30</option>
+                <option>Hot Towel Shave — $48</option>
+                <option>Razor Line-Up — $22</option>
+                <option>Kid's Cut — $28</option>
+              </select>
+            </div>
+            <div class="ff">
+              <label for="bbarber">Barber</label>
+              <select id="bbarber">
+                <option value="">First available</option>
+                <option>Marcus King</option>
+                <option>Jay Carter</option>
+                <option>Anthony Miles</option>
+              </select>
+            </div>
+            <div class="ff">
+              <label for="bdate">Date</label>
+              <input id="bdate" type="date" required>
+            </div>
+            <div class="ff">
+              <label for="btime">Time</label>
+              <input id="btime" type="time" required>
+            </div>
+            <div class="ff full">
+              <label for="bnotes">Style Notes</label>
+              <textarea id="bnotes" placeholder="Tell us what you want — fade height, beard shape, length, or paste an inspiration photo link…"></textarea>
+            </div>
+          </div>
+          <button class="btn btn-gold" type="submit" style="width:100%;margin-top:16px;min-height:54px;font-size:15px;letter-spacing:.14em;">Reserve Your Chair →</button>
+          <p class="form-note" id="formNote">We confirm every appointment personally. Walk-ins welcome when chairs are open.</p>
+        </form>
       </div>
-
-      <form class="booking-form reveal" id="bookingForm">
-        <div class="form-grid">
-          <div class="form-field">
-            <label for="name">Name</label>
-            <input id="name" type="text" placeholder="Your name" required />
-          </div>
-          <div class="form-field">
-            <label for="phone">Phone</label>
-            <input id="phone" type="tel" placeholder="(555) 123-4567" required />
-          </div>
-          <div class="form-field">
-            <label for="service">Service</label>
-            <select id="service" required>
-              <option value="">Choose service</option>
-              <option>Precision Haircut</option>
-              <option>Skin Fade</option>
-              <option>Beard Sculpt</option>
-              <option>Hot Towel Shave</option>
-              <option>Signature Cut + Beard</option>
-            </select>
-          </div>
-          <div class="form-field">
-            <label for="barber">Barber</label>
-            <select id="barber" required>
-              <option value="">Choose barber</option>
-              <option>First Available</option>
-              <option>Marcus King</option>
-              <option>Jay Carter</option>
-              <option>Anthony Miles</option>
-            </select>
-          </div>
-          <div class="form-field">
-            <label for="date">Date</label>
-            <input id="date" type="date" required />
-          </div>
-          <div class="form-field">
-            <label for="time">Time</label>
-            <input id="time" type="time" required />
-          </div>
-          <div class="form-field full">
-            <label for="message">Notes</label>
-            <textarea id="message" placeholder="Tell us what style you want, or paste an inspiration link."></textarea>
-          </div>
-        </div>
-
-        <button class="btn btn-primary" type="submit" style="width:100%; margin-top:18px;">Request Appointment →</button>
-        <p class="form-note" id="formNote">This demo form shows a success message. Connect it to Formspree, Netlify Forms, Calendly, Square, or Booksy before using it for a real client.</p>
-      </form>
     </div>
   </section>
 
+  <!-- ══════════ FAQ ══════════ -->
   <section class="section" id="faq">
-    <div class="container faq-grid">
-      <div class="reveal">
-        <div class="eyebrow">FAQ</div>
-        <h2 class="display" style="font-size: clamp(70px, 8vw, 120px);">Before You Sit Down.</h2>
-        <p style="color: var(--muted); line-height: 1.8; margin-top: 18px;">Answering common objections makes the business look professional and reduces messages asking the same things.</p>
-      </div>
+    <div class="container">
+      <div class="faq-layout">
+        <div class="reveal">
+          <div class="eyebrow">Before You Sit</div>
+          <h2>Questions<br>Answered.</h2>
+          <p>Everything you need to know before your first appointment at Trim Reaper.</p>
+          <a href="#booking" class="btn btn-gold" style="margin-top:28px;">Book Now →</a>
+        </div>
 
-      <div class="faq-list reveal">
-        <div class="faq-item active">
-          <button class="faq-question" type="button"><span>Do you accept walk-ins?</span><span>+</span></button>
-          <div class="faq-answer"><p>Yes, walk-ins are welcome when chairs are available. Booking ahead is recommended for weekends and evenings.</p></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-question" type="button"><span>How early should I arrive?</span><span>+</span></button>
-          <div class="faq-answer"><p>Arrive 5–10 minutes early so your barber can start your consultation on time.</p></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-question" type="button"><span>Can I show a reference photo?</span><span>+</span></button>
-          <div class="faq-answer"><p>Absolutely. Reference photos help us understand your preferred shape, fade height, length, and finish.</p></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-question" type="button"><span>What is your cancellation policy?</span><span>+</span></button>
-          <div class="faq-answer"><p>Please cancel or reschedule at least 12 hours before your appointment so we can offer the chair to another client.</p></div>
+        <div class="faq-stack reveal d1">
+          <div class="faq-item open">
+            <button class="faq-q" type="button">Do you accept walk-ins? <span class="faq-icon">+</span></button>
+            <div class="faq-a"><p>Yes — walk-ins are welcome when chairs are open. Booking ahead is strongly recommended for weekends and evenings, which fill days in advance.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" type="button">How early should I arrive? <span class="faq-icon">+</span></button>
+            <div class="faq-a"><p>Five to ten minutes early is ideal. It gives your barber time to start the consultation on schedule without rushing the cut.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" type="button">Can I bring a reference photo? <span class="faq-icon">+</span></button>
+            <div class="faq-a"><p>Absolutely — reference photos are encouraged. Drop one in the notes field when booking or show it at the chair. It helps your barber match the fade height, shape, and finish exactly.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" type="button">What is your cancellation policy? <span class="faq-icon">+</span></button>
+            <div class="faq-a"><p>Please cancel or reschedule at least 12 hours before your appointment. That gives us time to open the chair for another client on the waitlist.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" type="button">How do membership plans work? <span class="faq-icon">+</span></button>
+            <div class="faq-a"><p>Choose your tier, and we handle the rest. Priority booking, locked pricing, and a monthly reminder so you never let your cut grow out longer than you'd like.</p></div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="contact-strip" id="contact">
-    <div class="container contact-grid">
-      <div class="contact-item reveal">
+  <!-- ══════════ CONTACT ══════════ -->
+  <section class="contact-band" id="contact">
+    <div class="container contact-cells">
+      <div class="cc reveal">
         <small>Location</small>
-        <p>123 Market Street<br>Chicago, IL</p>
+        <p>123 Market Street<br>Chicago, IL 60611</p>
       </div>
-      <div class="contact-item reveal">
+      <div class="cc reveal d1">
         <small>Phone</small>
-        <p><a href="tel:+15551234567">(555) 123-4567</a></p>
+        <p><a href="tel:+13125550141">(312) 555-0141</a></p>
       </div>
-      <div class="contact-item reveal">
+      <div class="cc reveal d2">
         <small>Email</small>
         <p><a href="mailto:book@trimreaper.com">book@trimreaper.com</a></p>
       </div>
-      <div class="contact-item reveal">
+      <div class="cc reveal d3">
         <small>Instagram</small>
         <p><a href="#">@trimreaper</a></p>
       </div>
     </div>
   </section>
 
+  <!-- ══════════ FOOTER ══════════ -->
   <footer>
     <div class="container">
-      <div class="footer-grid">
+      <div class="footer-inner">
         <div class="footer-brand">
-          <a href="#top" class="logo">Trim <span></span> Reaper</a>
-          <p>A cinematic barbershop website layout designed to help grooming businesses look expensive and book more appointments.</p>
+          <a href="#top" class="logo">Trim<em style="font-style:normal;color:var(--gold)">Reaper</em></a>
+          <p>Chicago's master barbershop. Precision fades, hot towel shaves, and a studio built around the details that separate a good cut from one people notice.</p>
         </div>
         <div class="footer-links">
           <a href="#about">Story</a>
-          <a href="#services">Menu</a>
+          <a href="#services">Services</a>
+          <a href="#barbers">Barbers</a>
           <a href="#gallery">Work</a>
           <a href="#reviews">Reviews</a>
-          <a href="#booking">Booking</a>
+          <a href="#membership">Membership</a>
+          <a href="#booking">Book</a>
         </div>
       </div>
-      <p class="copyright">© <span id="year"></span> Trim Reaper Barbershop. All rights reserved.</p>
+      <p class="copyright">© <span id="year"></span> Trim Reaper Barbershop · Chicago, IL · All rights reserved.</p>
     </div>
   </footer>
 
-  <a href="#booking" class="mobile-cta">Book Your Appointment →</a>
+  <a href="#booking" class="mobile-cta">Book Your Chair →</a>
+  <button class="back-top" id="backTop" aria-label="Back to top">↑</button>
 
   <script>
-    const nav = document.getElementById("nav");
-    const menuBtn = document.getElementById("menuBtn");
-    const navLinks = document.querySelectorAll(".nav-links a");
-    const revealElements = document.querySelectorAll(".reveal");
-    const faqItems = document.querySelectorAll(".faq-item");
-    const bookingForm = document.getElementById("bookingForm");
-    const formNote = document.getElementById("formNote");
-
+    /* ── YEAR ── */
     document.getElementById("year").textContent = new Date().getFullYear();
 
+    /* ── DATE MIN ── */
+    const di = document.getElementById("bdate");
+    if(di) di.min = new Date().toISOString().split("T")[0];
+
+    /* ── SCROLL ── */
+    const nav = document.getElementById("nav");
+    const bt  = document.getElementById("backTop");
+
     window.addEventListener("scroll", () => {
-      nav.classList.toggle("scrolled", window.scrollY > 20);
+      const st = window.scrollY;
+      const ph = document.documentElement.scrollHeight - window.innerHeight;
+      pb.style.width = ph > 0 ? `${(st/ph)*100}%` : "0%";
+      nav.classList.toggle("scrolled", st > 24);
+      bt.classList.toggle("show", st > 600);
+    }, {passive:true});
+
+    bt.addEventListener("click", () => window.scrollTo({top:0, behavior:"smooth"}));
+
+    /* ── CURSOR ── */
+    const dot  = document.getElementById("cursorDot");
+    const ring = document.getElementById("cursorRing");
+    let cx=0, cy=0, rx=0, ry=0;
+
+    document.addEventListener("pointermove", e => {
+      cx = e.clientX; cy = e.clientY;
+      dot.style.left = cx+"px"; dot.style.top = cy+"px";
     });
+
+    (function animRing(){
+      rx += (cx-rx)*.11; ry += (cy-ry)*.11;
+      ring.style.left = rx+"px"; ring.style.top = ry+"px";
+      requestAnimationFrame(animRing);
+    })();
+
+    const hoverEls = document.querySelectorAll("a, button, .svc-row, .barber-card, .tier, .faq-item");
+    hoverEls.forEach(el => {
+      el.addEventListener("mouseenter", () => { dot.classList.add("hovered"); ring.classList.add("hovered"); });
+      el.addEventListener("mouseleave", () => { dot.classList.remove("hovered"); ring.classList.remove("hovered"); });
+    });
+
+    /* ── MOBILE NAV ── */
+    const menuBtn  = document.getElementById("menuBtn");
+    const navLinks = document.getElementById("navLinks");
 
     menuBtn.addEventListener("click", () => {
-      nav.classList.toggle("open");
-      menuBtn.textContent = nav.classList.contains("open") ? "×" : "☰";
-    });
-
-    navLinks.forEach(link => {
-      link.addEventListener("click", () => {
-        nav.classList.remove("open");
-        menuBtn.textContent = "☰";
-      });
-    });
-
-    const revealOnScroll = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-          revealOnScroll.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 });
-
-    revealElements.forEach(el => revealOnScroll.observe(el));
-
-    faqItems.forEach(item => {
-      const button = item.querySelector(".faq-question");
-      button.addEventListener("click", () => {
-        faqItems.forEach(otherItem => {
-          if (otherItem !== item) otherItem.classList.remove("active");
+      const open = navLinks.style.display === "flex";
+      if(!open){
+        Object.assign(navLinks.style, {
+          display:"flex", flexDirection:"column",
+          position:"absolute", top:"74px", left:"22px", right:"22px",
+          background:"rgba(8,6,4,.97)",
+          border:"1px solid rgba(232,168,32,.2)",
+          padding:"12px", gap:"2px", zIndex:"300"
         });
-        item.classList.toggle("active");
+        menuBtn.textContent = "×";
+      } else {
+        navLinks.style.display = "";
+        menuBtn.textContent = "☰";
+      }
+    });
+
+    document.querySelectorAll(".nav-links a").forEach(a => {
+      a.addEventListener("click", () => { navLinks.style.display=""; menuBtn.textContent="☰"; });
+    });
+
+    /* ── REVEAL ── */
+    const ro = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if(e.isIntersecting){ e.target.classList.add("visible"); ro.unobserve(e.target); }
+      });
+    }, {threshold:.1});
+
+    document.querySelectorAll(".reveal").forEach(el => ro.observe(el));
+
+    /* ── FAQ ── */
+    document.querySelectorAll(".faq-item").forEach(item => {
+      item.querySelector(".faq-q").addEventListener("click", () => {
+        const was = item.classList.contains("open");
+        document.querySelectorAll(".faq-item").forEach(i => i.classList.remove("open"));
+        if(!was) item.classList.add("open");
       });
     });
 
-    bookingForm.addEventListener("submit", (e) => {
+    /* ── FORM ── */
+    document.getElementById("bookingForm").addEventListener("submit", e => {
       e.preventDefault();
-      formNote.textContent = "Appointment request received. For a real client site, connect this form to email, Formspree, Netlify Forms, Calendly, Square, or Booksy.";
-      formNote.style.color = "#f5d58a";
-      bookingForm.reset();
+      const fn = document.getElementById("formNote");
+      fn.textContent = "✓ Appointment request received. We'll confirm with you personally within a few hours.";
+      fn.style.color = "var(--gold)";
+      fn.style.fontStyle = "normal";
+      e.target.reset();
     });
-
-
-    const scrollProgress = document.getElementById("scrollProgress");
-    const cursorGlow = document.getElementById("cursorGlow");
-
-    window.addEventListener("scroll", () => {
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = maxScroll > 0 ? (window.scrollY / maxScroll) * 100 : 0;
-      if (scrollProgress) scrollProgress.style.width = `${progress}%`;
-    });
-
-    window.addEventListener("pointermove", (event) => {
-      if (!cursorGlow) return;
-      cursorGlow.style.left = `${event.clientX}px`;
-      cursorGlow.style.top = `${event.clientY}px`;
-      cursorGlow.style.opacity = "1";
-    });
-
-    document.querySelectorAll(".service-row, .barber-card, .review-card").forEach((el, index) => {
-      el.classList.add(`delay-${(index % 3) + 1}`);
-    });
-
   </script>
 </body>
 </html>
